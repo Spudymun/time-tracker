@@ -109,3 +109,52 @@ Create the database schema and infrastructure:
 
 Follow #file:.github/copilot-instructions.md
 ```
+
+---
+
+## Промпт 2: Validations + Repositories
+
+```
+Read #file:spec/DOMAIN.md and #file:.github/instructions/prisma.instructions.md
+
+Create the data layer.
+
+IMPORTANT: ALL repository methods now receive `userId: string` as a parameter.
+This is REQUIRED for data isolation between users.
+Never filter without userId — it would expose other users' data.
+
+1. lib/validations/project-schema.ts — CreateProjectSchema, UpdateProjectSchema (Zod v4)
+   Fields include: name, color, estimatedHours (optional float > 0), hourlyRate (optional float >= 0),
+   isArchived (optional boolean, only in UpdateProjectSchema)
+2. lib/validations/tag-schema.ts — CreateTagSchema, UpdateTagSchema
+3. lib/validations/time-entry-schema.ts — CreateEntrySchema, UpdateEntrySchema, StopEntrySchema
+
+4. lib/db/projects-repository.ts:
+   - findAll(userId: string, filter?: { archived?: 'true' | 'false' | 'all' }): Project[] with _count
+     Always add `where: { userId }` to every query
+   - findById(id, userId): Project | null  — add `where: { id, userId }`
+   - create(userId, data): Project
+   - update(id, userId, data): Project  — findFirst({where:{id,userId}}) before update
+   - delete(id, userId): void
+   - archive(id, userId): Project
+   - unarchive(id, userId): Project
+
+5. lib/db/tags-repository.ts:
+   - All methods receive userId: string, always filter by userId
+
+6. lib/db/time-entries-repository.ts:
+   - findMany(userId: string, filters): — always where: { userId }
+   - findActive(userId: string): TimeEntry with project+tags or null
+   - findById(id, userId): with project+tags or null
+   - create(userId, data): with relations
+   - update(id, userId, data): check ownership first
+   - delete(id, userId): check ownership first
+   - stopActive(id, userId, stoppedAt): check ownership
+
+7. lib/db/task-names-repository.ts:
+   - findRecent(userId: string, q?: string): string[]
+
+Write unit test stubs in lib/validations/*.test.ts
+
+Follow #file:.github/instructions/prisma.instructions.md
+```

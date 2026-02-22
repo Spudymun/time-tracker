@@ -62,19 +62,20 @@
 
 ## Data Layer
 
-- [ ] Создать lib/validations/project-schema.ts
+- [x] Создать lib/validations/project-schema.ts
       • CreateProjectSchema: name, color, estimatedHours?, hourlyRate?
       • UpdateProjectSchema: + isArchived?
-- [ ] Создать lib/validations/tag-schema.ts (CreateTagSchema, UpdateTagSchema)
-- [ ] Создать lib/validations/time-entry-schema.ts (CreateEntrySchema, UpdateEntrySchema)
-- [ ] Тесты для схем: project-schema.test.ts, tag-schema.test.ts
-- [ ] Создать lib/db/projects-repository.ts
+- [x] Создать lib/validations/tag-schema.ts (CreateTagSchema, UpdateTagSchema)
+- [x] Создать lib/validations/time-entry-schema.ts (CreateEntrySchema, UpdateEntrySchema, StopEntrySchema)
+- [x] Тесты для схем: project-schema.test.ts, tag-schema.test.ts, time-entry-schema.test.ts (59 тестов)
+- [x] Создать lib/db/projects-repository.ts
       • ВСЕ методы принимают userId: string (первым аргументом)
-      • findAll(userId, filter?) + вычисляемые поля: billableSeconds, earnings, estimateProgress
-- [ ] Создать lib/db/tags-repository.ts — все методы с userId
-- [ ] Создать lib/db/time-entries-repository.ts
+      • findAll(userId, filter?), findById, create, update, delete, archive, unarchive
+- [x] Создать lib/db/tags-repository.ts — все методы с userId
+- [x] Создать lib/db/time-entries-repository.ts
       • все методы с userId; findMany: фильтры tagId, q (подстрока by description)
-- [ ] Создать lib/db/task-names-repository.ts — findRecent(userId, q?)
+      • TimeEntryWithRelations тип с project + timeEntryTags.tag
+- [x] Создать lib/db/task-names-repository.ts — findRecent(userId, q?)
 
 ## Services
 
