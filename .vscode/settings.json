@@ -1,0 +1,100 @@
+{
+  // ─── INLINE SUGGESTIONS ──────────────────────────────────────────────────
+  "github.copilot.enable": {
+    "*": true,
+    "markdown": true,
+    "yaml": true,
+    "plaintext": false,
+    "scminput": false
+  },
+  "github.copilot.nextEditSuggestions.enabled": true,
+  "github.copilot.nextEditSuggestions.fixes": true,
+  "editor.inlineSuggest.minShowDelay": 200,
+
+  // ─── CUSTOM INSTRUCTIONS ─────────────────────────────────────────────────
+  // Автоматически подгружает .github/copilot-instructions.md в каждый запрос
+  "github.copilot.chat.codeGeneration.useInstructionFiles": true,
+  // Подгружает .github/instructions/*.instructions.md по applyTo
+  "chat.instructionsFilesLocations": {
+    ".github/instructions": true
+  },
+  "chat.includeReferencedInstructions": true,
+  "chat.includeApplyingInstructions": true,
+
+  // ─── AGENT MODE ───────────────────────────────────────────────────────────
+  "chat.agent.enabled": true,
+  "chat.agent.maxRequests": 75,
+  "github.copilot.chat.agent.autoFix": true,
+
+  // ─── MCP ──────────────────────────────────────────────────────────────────
+  // Разрешить все MCP серверы из mcp.json
+  "chat.mcp.access": "all",
+  // Автозапуск MCP серверов при открытии VS Code
+  // ВАЖНО: project-context требует `npm run mcp:build` перед первым запуском
+  "chat.mcp.autoStart": "newAndOutdated",
+  // Автообнаружение MCP от Claude Desktop (выключено по умолчанию)
+  "chat.mcp.discovery.enabled": {
+    "claude-desktop": false,
+    "windsurf": false,
+    "cursor-global": false,
+    "cursor-workspace": false
+  },
+
+  // ─── AGENTS, SKILLS, PROMPTS ──────────────────────────────────────────────
+  "chat.useAgentSkills": true,
+  "chat.agentSkillsLocations": {
+    ".github/skills": true
+  },
+  "chat.agentFilesLocations": {
+    ".github/agents": true
+  },
+  "chat.promptFilesLocations": {
+    ".github/prompts": true
+  },
+
+  // ─── CONTEXT ─────────────────────────────────────────────────────────────
+  "github.copilot.chat.codesearch.enabled": true,
+  "github.copilot.chat.editor.temporalContext.enabled": true,
+
+  // ─── БЕЗОПАСНОСТЬ ТЕРМИНАЛА ───────────────────────────────────────────────
+  // Агент спрашивает подтверждение перед запуском команд в терминале
+  "chat.tools.global.autoApprove": false,
+  // Исключения — безопасные команды для авто-одобрения
+  "chat.tools.terminal.autoApprove": {
+    "npm run": true,
+    "npx vitest": true,
+    "git status": true,
+    "git diff": true,
+    "git log": true
+  },
+
+  // ─── CHAT UI ──────────────────────────────────────────────────────────────
+  "chat.checkpoints.enabled": true,
+  "chat.editing.autoAcceptDelay": 0,
+  "github.copilot.chat.reviewSelection.enabled": true,
+  "chat.editor.wordWrap": "on",
+
+  // ─── COMMIT / PR ──────────────────────────────────────────────────────────
+  "github.copilot.chat.commitMessageGeneration.instructions": [
+    {
+      "text": "Use Conventional Commits format: type(scope): description. Types: feat, fix, docs, style, refactor, test, chore. Example: feat(timer): add stop endpoint"
+    }
+  ],
+
+  // ─── TYPESCRIPT ───────────────────────────────────────────────────────────
+  "typescript.preferences.importModuleSpecifier": "non-relative",
+  "typescript.tsdk": "node_modules/typescript/lib",
+
+  // ─── EDITOR ───────────────────────────────────────────────────────────────
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  }
+}

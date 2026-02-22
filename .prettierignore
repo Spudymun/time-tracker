@@ -1,0 +1,17 @@
+# Prettier ignore
+
+# Build outputs
+.next/
+dist/
+mcp/dist/
+
+# Generated code (Prisma client)
+generated/
+
+# Package files
+node_modules/
+
+# Lock files
+package-lock.json
+pnpm-lock.yaml
+yarn.lock

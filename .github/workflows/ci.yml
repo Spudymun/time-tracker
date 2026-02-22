@@ -1,0 +1,53 @@
+name: CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+
+jobs:
+  ci:
+    name: Lint · Type-check · Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      # Prisma generate нужен до type-check — генерирует типы клиента
+      - name: Generate Prisma client
+        run: npm run db:generate
+        env:
+          # Prisma generate не требует реальной БД, но переменная должна быть задана
+          DATABASE_URL: postgresql://user:pass@localhost:5432/ci_placeholder
+
+      - name: Type check
+        run: npm run type-check
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Format check
+        run: npm run format:check
+
+      - name: Run tests
+        run: npm run test
+        # Тесты unit-уровня (сервисы, схемы) — не требуют БД
+        # Если добавишь интеграционные тесты — подними Postgres через services:
+        # services:
+        #   postgres:
+        #     image: postgres:16
+        #     env:
+        #       POSTGRES_PASSWORD: password
+        #     ports:
+        #       - 5432:5432

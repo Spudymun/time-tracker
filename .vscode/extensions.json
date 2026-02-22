@@ -1,0 +1,23 @@
+{
+  "recommendations": [
+    // GitHub Copilot — обязательно
+    "GitHub.copilot",
+    "GitHub.copilot-chat",
+    // Prettier — форматирование
+    "esbenp.prettier-vscode",
+    // ESLint
+    "dbaeumer.vscode-eslint",
+    // Prisma — синтаксис в .prisma файлах
+    "Prisma.prisma",
+    // Tailwind CSS — IntelliSense для классов
+    "bradlc.vscode-tailwindcss",
+    // Error Lens — ошибки inline
+    "usernamehw.errorlens",
+    // GitLens — история git в коде
+    "eamodio.gitlens",
+    // Better Comments — подсветка TODO/FIXME
+    "aaron-bond.better-comments",
+    // Vitest — запуск тестов из UI
+    "vitest.explorer"
+  ]
+}
