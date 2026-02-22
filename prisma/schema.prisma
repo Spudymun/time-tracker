@@ -11,7 +11,7 @@ datasource db {
 // ─── Auth.js / User ──────────────────────────────────────────────────────
 
 model User {
-  id            String    @id @default(uuid())
+  id            String    @id @default(cuid())
   name          String?
   email         String?   @unique
   emailVerified DateTime?
@@ -27,7 +27,7 @@ model User {
 }
 
 model Account {
-  id                String  @id @default(uuid())
+  id                String  @id @default(cuid())
   userId            String
   type              String
   provider          String
@@ -98,7 +98,7 @@ model TimeEntry {
   id              String    @id @default(uuid())
   userId          String
   description     String?
-  projectId       String?
+  projectId       String?   @db.Uuid
   billable        Boolean   @default(false)
   startedAt       DateTime
   stoppedAt       DateTime?

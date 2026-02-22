@@ -22,9 +22,9 @@
 - [x] Создать spec/UI_STATES.md
 - [ ] Скопировать .env.example → .env.local и заполнить DATABASE_URL + AUTH_SECRET + OAuth креденшиалы
 - [ ] Запустить `npm install`
-- [ ] Установить: `npm install next-auth@beta @auth/prisma-adapter bcryptjs recharts`
-- [ ] Установить devDeps: `npm install -D @types/bcryptjs`
-- [ ] Запустить `npm run mcp:build`
+- [x] Установить: `npm install next-auth@beta @auth/prisma-adapter bcryptjs recharts`
+- [x] Установить devDeps: `npm install -D @types/bcryptjs`
+- [x] Запустить `npm run mcp:build`
 
 ## UI Примитивы + Design System (Промпт 6а)
 
@@ -43,22 +43,22 @@
 
 ## Auth (Prompt 0)
 
-- [ ] Создать lib/auth.ts (NextAuth config: Credentials + GitHub + Google, JWT strategy)
-- [ ] Создать app/api/auth/[...nextauth]/route.ts
-- [ ] Создать middleware.ts (защита маршрутов + 401 для API)
-- [ ] Создать types/next-auth.d.ts (расширение Session + JWT типов)
-- [ ] Создать lib/validations/auth-schema.ts (RegisterSchema, LoginSchema)
-- [ ] Создать app/api/auth/register/route.ts (POST: bcrypt + create user, 409 on duplicate)
+- [x] Создать lib/auth.ts (NextAuth config: Credentials + GitHub + Google, JWT strategy)
+- [x] Создать app/api/auth/[...nextauth]/route.ts
+- [x] Создать middleware.ts (защита маршрутов + 401 для API)
+- [x] Создать types/next-auth.d.ts (расширение Session + JWT типов)
+- [x] Создать lib/validations/auth-schema.ts (RegisterSchema, LoginSchema)
+- [x] Создать app/api/auth/register/route.ts (POST: bcrypt + create user, 409 on duplicate)
 
 ## Infrastructure
 
-- [ ] Обновить prisma/schema.prisma — модели User, Account, VerificationToken (от @auth/prisma-adapter)
+- [x] Обновить prisma/schema.prisma — модели User, Account, VerificationToken (от @auth/prisma-adapter)
       • Project/Tag/TimeEntry: добавить userId (FK → User, onDelete:Cascade)
       • Project.name/Tag.name: изменить на @@unique([userId, name])
 - [ ] Запустить `npm run db:push`
-- [ ] Убедиться что lib/prisma.ts singleton создан корректно
-- [ ] Создать lib/utils/date-utils.ts (toUTC, startOfWeek, formatDate)
-- [ ] Создать lib/utils/time-format.ts (formatDuration, parseDurationInput)
+- [x] Убедиться что lib/prisma.ts singleton создан корректно
+- [x] Создать lib/utils/date-utils.ts (toUTC, startOfWeek, formatDate)
+- [x] Создать lib/utils/time-format.ts (formatDuration, parseDurationInput)
 
 ## Data Layer
 
