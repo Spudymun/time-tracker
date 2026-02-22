@@ -1,11 +1,20 @@
 import { prisma } from "@/lib/prisma";
-import type { Tag } from "@/generated/prisma/client/client";
+import type { Prisma, Tag } from "@/generated/prisma/client/client";
 import type { CreateTagInput, UpdateTagInput } from "@/lib/validations/tag-schema";
 
+/**
+ * Тег с количеством использований в записях.
+ * usageCount = кол-во строк TimeEntryTag, ссылающихся на этот тег.
+ */
+export type TagWithCount = Prisma.TagGetPayload<{
+  include: { _count: { select: { timeEntryTags: true } } };
+}>;
+
 export const tagsRepository = {
-  async findAll(userId: string): Promise<Tag[]> {
+  async findAll(userId: string): Promise<TagWithCount[]> {
     return prisma.tag.findMany({
       where: { userId },
+      include: { _count: { select: { timeEntryTags: true } } },
       orderBy: { name: "asc" },
     });
   },
@@ -16,13 +25,14 @@ export const tagsRepository = {
     });
   },
 
-  async create(userId: string, data: CreateTagInput): Promise<Tag> {
+  async create(userId: string, data: CreateTagInput): Promise<TagWithCount> {
     return prisma.tag.create({
       data: {
         userId,
         name: data.name,
         color: data.color,
       },
+      include: { _count: { select: { timeEntryTags: true } } },
     });
   },
 

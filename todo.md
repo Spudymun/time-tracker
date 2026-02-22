@@ -91,13 +91,13 @@
 
 ## API — Projects
 
-- [ ] GET/POST /api/projects (с `userId` из session)
-- [ ] GET/PUT/DELETE /api/projects/[id] (с `userId` из session)
+- [x] GET/POST /api/projects (с `userId` из session)
+- [x] GET/PUT/DELETE /api/projects/[id] (с `userId` из session)
 
 ## API — Tags
 
-- [ ] GET/POST /api/tags (с `userId` из session)
-- [ ] PUT/DELETE /api/tags/[id] (с `userId` из session)
+- [x] GET/POST /api/tags (с `userId` из session)
+- [x] PUT/DELETE /api/tags/[id] (с `userId` из session)
 
 ## API — Time Entries
 
@@ -106,7 +106,7 @@
 - [ ] GET/PUT/DELETE /api/time-entries/[id] (с userId)
 - [ ] POST /api/time-entries/[id]/stop (с userId)
 - [ ] POST /api/time-entries/[id]/continue (с userId)
-- [ ] GET /api/task-names?q= (с userId)
+- [x] GET /api/task-names?q= (с userId)
 
 ## API — Reports & Dashboard
 

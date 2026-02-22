@@ -158,3 +158,44 @@ Write unit test stubs in lib/validations/*.test.ts
 
 Follow #file:.github/instructions/prisma.instructions.md
 ```
+
+---
+
+## Промпт 3: API Routes — Projects + Tags
+
+```
+Read #file:spec/FEATURE_projects.md and #file:spec/FEATURE_tags.md
+Read #file:.github/instructions/api-routes.instructions.md
+Read #file:spec/FEATURE_auth.md (the Auth section on how to get userId)
+
+IMPORTANT: Every route must start with session check:
+  const session = await auth();
+  if (!session?.user?.id) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  const userId = session.user.id;
+Then pass userId to all repository calls.
+
+Implement API routes for Projects and Tags:
+
+app/api/projects/route.ts:
+  GET: projectsRepository.findAll(userId) → 200
+  POST: validate CreateProjectSchema → projectsRepository.create(userId, data) → 201
+        handle P2002 → 409
+
+app/api/projects/[id]/route.ts:
+  GET: findById(id, userId) → 404 if not found → 200
+  PUT: validate UpdateProjectSchema → update(id, userId, data) → P2002 → 409
+  DELETE: delete(id, userId) → 204, P2025 → 404
+
+app/api/tags/route.ts + app/api/tags/[id]/route.ts — same pattern with userId
+
+app/api/task-names/route.ts:
+  GET ?q= → taskNamesRepository.findRecent(userId, q) → 200 with string[]
+
+Every route:
+- auth() check FIRST, before Zod parse
+- Zod safeParse before DB
+- NextResponse.json() with correct status
+- try/catch with handlePrismaError utility
+
+Follow #file:.github/instructions/api-routes.instructions.md
+```
