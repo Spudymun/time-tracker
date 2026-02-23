@@ -215,7 +215,7 @@
 ## Финальная проверка (Промпт 16)
 
 - [x] Проверка BUSINESS_RULES: один активный таймер per user, earnings округление, архивация
-- [x] Проверка DESIGN_SYSTEM: нет голых `<button>`/`<input>` вне ui/, нет slate-_/gray-_ классов
+- [x] Проверка DESIGN*SYSTEM: нет голых `<button>`/`<input>` вне ui/, нет slate-*/gray-\_ классов
 - [x] Проверка UI_STATES: все empty/error/loading states на месте
 - [x] Проверка auth: каждый API route начинается с `auth()` + 401, middleware защищает маршруты
 - [x] TagSelect блокирует добавление 11-го тега (MAX_TAGS = 10)
