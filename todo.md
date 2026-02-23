@@ -182,16 +182,16 @@
 - [x] Навигация в layout: главная / projects / tags / reports
       • Создан components/ui/NavLinks.tsx (usePathname, active highlighting bg-surface-3)
       • Header: строка nav (лого + NavLinks) + строка TimerBar
-- [ ] UserMenu.tsx — аватар/инициалы + имя + dropdown (имя, email, Sign out)
+- [x] UserMenu.tsx — аватар/инициалы + имя + dropdown (имя, email, Sign out)
 
 ## UI — Auth Pages (Prompt 15)
 
-- [ ] Создать app/(auth)/layout.tsx (центрированный, без TimerBar)
-- [ ] Создать app/(auth)/login/page.tsx
-- [ ] Создать app/(auth)/register/page.tsx
-- [ ] Создать components/auth/LoginForm.tsx (Credentials + GitHub/Google OAuth buttons)
-- [ ] Создать components/auth/RegisterForm.tsx (POST /api/auth/register + auto-login)
-- [ ] Создать components/auth/OAuthButton.tsx (кнопка с иконкой провайдера)
+- [x] Создать app/(auth)/layout.tsx (центрированный, без TimerBar)
+- [x] Создать app/(auth)/login/page.tsx
+- [x] Создать app/(auth)/register/page.tsx
+- [x] Создать components/auth/LoginForm.tsx (Credentials + GitHub/Google OAuth buttons)
+- [x] Создать components/auth/RegisterForm.tsx (POST /api/auth/register + auto-login)
+- [x] Создать components/auth/OAuthButton.tsx (кнопка с иконкой провайдера)
 
 ## Тесты
 
