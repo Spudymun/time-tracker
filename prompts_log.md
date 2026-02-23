@@ -442,3 +442,41 @@ Integrate TimerBar into app/layout.tsx
 
 Follow #file:.github/instructions/components.instructions.md
 ```
+
+---
+
+## Промпт 8: UI — Entries List
+
+```
+Read #file:spec/FEATURE_entries.md
+
+Create components/entries/:
+
+TagChip.tsx — colored chip showing tag name, optional onRemove prop
+  Reuse in TimerBar TagSelect and EntryItem
+
+EntryDurationInput.tsx — inline input, format hh:mm, validates range 00:01-99:59
+
+EntriesFilterBar.tsx — filter panel above entries list
+  Props: onChange(filters: EntriesFilter)
+  Fields: text search (q), ProjectSelect, TagSelect (single), billable toggle
+  "Clear" button visible when any filter is active
+  Filters combine as AND, updates query params sent to fetchEntries
+
+EntryItem.tsx — two modes:
+  Display: [project color dot] [description or "(no description)"] [tags chips] [$ billable icon if true] [duration] [Continue btn] [Edit btn] [Delete btn]
+  Edit: inline form with all fields editable (description, ProjectSelect, TagSelect, BillableToggle, EntryDurationInput)
+  Archived project shown with (archived) label in edit mode
+  Transitions smoothly between modes
+
+EntriesProjectGroup.tsx — project header with total time for this group on this day
+EntryDeleteConfirm.tsx — inline yes/no confirmation
+
+EntriesDayGroup.tsx — date header ("Today", "Yesterday", date), total for day, list of ProjectGroups
+
+EntriesList.tsx — loads from entries-store with active filters,
+  groups by date → project, infinite scroll or load more
+  Passes filter state to EntriesFilterBar; re-fetches on filter change
+
+Connect to app/(main)/page.tsx below DashboardWidget
+```

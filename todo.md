@@ -128,14 +128,15 @@
 
 ## UI — Entries List (FEATURE_entries.md)
 
-- [x] Создать lib/stores/entries-store.ts (добавить поддержку фильтров: projectId, tagId, billable, q)
-- [ ] EntriesFilterBar.tsx (поиск, выбор проекта/тега, billable, кнопка Clear)
-- [ ] EntryItem.tsx (display + edit mode + отображение archived проекта)
-- [ ] EntryDurationInput.tsx (inline hh:mm input)
-- [ ] EntriesProjectGroup.tsx (группа по проекту)
-- [ ] EntriesDayGroup.tsx (группа по дате)
-- [ ] EntriesList.tsx (главный контейнер)
-- [ ] Подключить на главную страницу
+- [x] Создать lib/stores/entries-store.ts (добавить поддержку фильтров: projectId, tagId, billable, q; + replaceActiveEntry)
+- [x] EntriesFilterBar.tsx (поиск, выбор проекта/тега, billable, кнопка Clear)
+- [x] EntryItem.tsx (display + edit mode + отображение archived проекта + +N more для тегов)
+- [x] EntryDurationInput.tsx (inline hh:mm input, диапазон 00:01–99:59)
+- [x] EntriesProjectGroup.tsx (группа по проекту)
+- [x] EntriesDayGroup.tsx (группа по дате: Today/Yesterday/дата + итог дня)
+- [x] EntriesList.tsx (главный контейнер, client-side фильтрация, Load more +7 дней)
+- [x] EntryDeleteConfirm.tsx (инлайн подтверждение удаления)
+- [x] Подключить на главную страницу (app/(main)/page.tsx)
 
 ## UI — Dashboard (FEATURE_dashboard.md)
 

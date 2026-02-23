@@ -15,6 +15,8 @@ interface EntriesState {
   continueEntry: (id: string) => Promise<void>;
   // Добавляет запись в начало списка — вызывается из timer-store после stopTimer
   addEntry: (entry: TimeEntryWithRelations) => void;
+  // Заменяет или удаляет активную запись в списке — вызывается из timer-store
+  replaceActiveEntry: (entry: TimeEntryWithRelations | null) => void;
 }
 
 const initialState = {
@@ -130,6 +132,22 @@ export const useEntriesStore = create<EntriesState>((set, get) => ({
   addEntry: (entry: TimeEntryWithRelations) => {
     set((state) => ({ entries: [entry, ...state.entries] }));
   },
+
+  // Заменяет активную запись (stoppedAt=null) в списке или удаляет её.
+  // entry=null — убрать активную из списка (при остановке таймера addEntry добавит завершённую).
+  replaceActiveEntry: (entry: TimeEntryWithRelations | null) => {
+    set((state) => {
+      const withoutActive = state.entries.filter((e) => e.stoppedAt !== null);
+      if (entry === null) return { entries: withoutActive };
+      // Если активная уже есть — заменяем, иначе добавляем в начало
+      const hasActive = state.entries.some((e) => e.stoppedAt === null);
+      return {
+        entries: hasActive
+          ? state.entries.map((e) => (e.stoppedAt === null ? entry : e))
+          : [entry, ...withoutActive],
+      };
+    });
+  },
 }));
 
 // Atomic selectors — предотвращают лишние ре-рендеры
@@ -145,4 +163,5 @@ export const useEntriesActions = () =>
     deleteEntry: s.deleteEntry,
     continueEntry: s.continueEntry,
     addEntry: s.addEntry,
+    replaceActiveEntry: s.replaceActiveEntry,
   }));
