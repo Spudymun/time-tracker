@@ -44,7 +44,7 @@ export function ProjectsList({ initialProjects }: ProjectsListProps) {
         const data: ProjectApiItem[] = await res.json();
         setArchivedProjects(data);
       } catch {
-        toast.error("Не удалось загрузить архивные проекты");
+        toast.error("Failed to load archived projects");
         return;
       } finally {
         setIsLoadingArchived(false);
@@ -71,7 +71,7 @@ export function ProjectsList({ initialProjects }: ProjectsListProps) {
       });
 
       if (res.status === 409) {
-        toast.error("Проект с таким названием уже существует");
+        toast.error("A project with this name already exists");
         return;
       }
       if (!res.ok) throw new Error("Failed to create project");
@@ -79,9 +79,9 @@ export function ProjectsList({ initialProjects }: ProjectsListProps) {
       const created: ProjectApiItem = await res.json();
       setActiveProjects((prev) => [created, ...prev]);
       setShowNewForm(false);
-      toast.success(`Проект «${created.name}» создан`);
+      toast.success(`Project "${created.name}" created`);
     } catch {
-      toast.error("Не удалось создать проект");
+      toast.error("Failed to create project");
     } finally {
       setIsCreating(false);
     }
@@ -97,7 +97,7 @@ export function ProjectsList({ initialProjects }: ProjectsListProps) {
     });
 
     if (res.status === 409) {
-      toast.error("Проект с таким названием уже существует");
+      toast.error("A project with this name already exists");
       throw new Error("Conflict");
     }
     if (!res.ok) throw new Error("Failed to update project");
@@ -108,7 +108,7 @@ export function ProjectsList({ initialProjects }: ProjectsListProps) {
 
     setActiveProjects(replace);
     setArchivedProjects(replace);
-    toast.success("Проект обновлён");
+    toast.success("Project updated");
   };
 
   // ── Delete ────────────────────────────────────────────────────────────────
@@ -119,7 +119,7 @@ export function ProjectsList({ initialProjects }: ProjectsListProps) {
 
     setActiveProjects((prev) => prev.filter((p) => p.id !== id));
     setArchivedProjects((prev) => prev.filter((p) => p.id !== id));
-    toast.success("Проект удалён");
+    toast.success("Project deleted");
   };
 
   // ── Archive ───────────────────────────────────────────────────────────────
@@ -137,7 +137,7 @@ export function ProjectsList({ initialProjects }: ProjectsListProps) {
     setActiveProjects((prev) => prev.filter((p) => p.id !== id));
     if (showArchived) setArchivedProjects((prev) => [updated, ...prev]);
 
-    toast.success(`«${updated.name}» архивирован`);
+    toast.success(`"${updated.name}" archived`);
   };
 
   // ── Unarchive ─────────────────────────────────────────────────────────────
@@ -155,7 +155,7 @@ export function ProjectsList({ initialProjects }: ProjectsListProps) {
     setArchivedProjects((prev) => prev.filter((p) => p.id !== id));
     setActiveProjects((prev) => [updated, ...prev]);
 
-    toast.success(`«${updated.name}» разархивирован`);
+    toast.success(`"${updated.name}" unarchived`);
   };
 
   // ── Render ────────────────────────────────────────────────────────────────
@@ -164,10 +164,10 @@ export function ProjectsList({ initialProjects }: ProjectsListProps) {
     <div className="flex flex-col gap-4">
       {/* Header row */}
       <div className="flex items-center justify-between">
-        <h2 className="text-lg font-semibold text-text-1">Проекты</h2>
+        <h2 className="text-lg font-semibold text-text-1">Projects</h2>
         <Button variant="primary" size="sm" onClick={() => setShowNewForm((v) => !v)}>
           <Plus size={14} />
-          Новый проект
+          New project
         </Button>
       </div>
 
@@ -183,10 +183,10 @@ export function ProjectsList({ initialProjects }: ProjectsListProps) {
       {/* Active projects */}
       {activeProjects.length === 0 && !showNewForm ? (
         <div className="flex flex-col items-center gap-3 rounded-lg border border-border bg-surface py-12 text-center">
-          <p className="text-text-2">У вас пока нет активных проектов.</p>
+          <p className="text-text-2">You don&apos;t have any active projects yet.</p>
           <Button variant="primary" size="sm" onClick={() => setShowNewForm(true)}>
             <Plus size={14} />
-            Создать первый проект
+            Create first project
           </Button>
         </div>
       ) : (
@@ -220,7 +220,7 @@ export function ProjectsList({ initialProjects }: ProjectsListProps) {
           ) : (
             <ChevronDown size={14} />
           )}
-          {showArchived ? "Скрыть архивные" : "Показать архивные"}
+          {showArchived ? "Hide archived" : "Show archived"}
         </Button>
       </div>
 
@@ -228,7 +228,7 @@ export function ProjectsList({ initialProjects }: ProjectsListProps) {
       {showArchived && (
         <div className="flex flex-col gap-2">
           {archivedProjects.length === 0 ? (
-            <p className="py-4 text-center text-sm text-text-3">Нет архивных проектов</p>
+            <p className="py-4 text-center text-sm text-text-3">No archived projects</p>
           ) : (
             archivedProjects.map((project) => (
               <ProjectItem

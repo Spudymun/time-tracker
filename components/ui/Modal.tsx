@@ -72,7 +72,7 @@ export function Modal({ open, onClose, title, description, children }: ModalProp
           <button
             onClick={onClose}
             className="shrink-0 rounded-md p-1 text-text-3 transition-colors hover:bg-surface-2 hover:text-text-1 focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none"
-            aria-label="Закрыть"
+            aria-label="Close"
           >
             <X size={20} />
           </button>

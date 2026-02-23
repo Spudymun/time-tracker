@@ -124,14 +124,14 @@ export function ProjectItem({
 
           {/* Stats */}
           <div className="flex shrink-0 items-center gap-4 text-sm text-text-2">
-            <span title="Всего времени">{totalFormatted}</span>
+            <span title="Total time">{totalFormatted}</span>
             {project.billableSeconds > 0 && (
-              <span title="Billable время" className="text-success">
+              <span title="Billable time" className="text-success">
                 ${project.billableSeconds > 0 ? billableFormatted : "0m"} billable
               </span>
             )}
             {project.earnings != null && (
-              <span title="Доход" className="font-medium text-text-1">
+              <span title="Earnings" className="font-medium text-text-1">
                 $
                 {project.earnings.toLocaleString("en-US", {
                   minimumFractionDigits: 0,
@@ -139,9 +139,8 @@ export function ProjectItem({
                 })}
               </span>
             )}
-            <span title="Количество записей" className="text-text-3">
-              {project.entryCount}{" "}
-              {project.entryCount === 1 ? "запись" : project.entryCount < 5 ? "записи" : "записей"}
+            <span title="Entry count" className="text-text-3">
+              {project.entryCount} {project.entryCount === 1 ? "entry" : "entries"}
             </span>
           </div>
 
@@ -152,23 +151,18 @@ export function ProjectItem({
               size="sm"
               onClick={handleArchiveToggle}
               loading={isArchiving}
-              title={project.isArchived ? "Разархивировать" : "Архивировать"}
+              title={project.isArchived ? "Unarchive" : "Archive"}
             >
               {project.isArchived ? <ArchiveRestore size={14} /> : <Archive size={14} />}
             </Button>
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => setIsEditing(true)}
-              title="Редактировать"
-            >
+            <Button variant="ghost" size="sm" onClick={() => setIsEditing(true)} title="Edit">
               <Pencil size={14} />
             </Button>
             <Button
               variant="ghost"
               size="sm"
               onClick={() => setShowDeleteConfirm(true)}
-              title="Удалить"
+              title="Delete"
               className="text-error hover:text-error"
             >
               <Trash2 size={14} />

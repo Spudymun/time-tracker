@@ -66,8 +66,7 @@ export function TagItem({ tag, onUpdate, onDelete }: TagItemProps) {
 
       {/* Usage count */}
       <span className="shrink-0 text-sm text-text-3">
-        {tag.usageCount}{" "}
-        {tag.usageCount === 1 ? "запись" : tag.usageCount < 5 ? "записи" : "записей"}
+        {tag.usageCount} {tag.usageCount === 1 ? "entry" : "entries"}
       </span>
 
       {/* Delete confirm inline */}
@@ -75,7 +74,7 @@ export function TagItem({ tag, onUpdate, onDelete }: TagItemProps) {
         <div className="flex shrink-0 items-center gap-1">
           {tag.usageCount > 0 && (
             <span className="mr-1 text-xs text-warning">
-              Удалить из {tag.usageCount} {tag.usageCount === 1 ? "записи" : "записей"}?
+              Delete from {tag.usageCount} {tag.usageCount === 1 ? "entry" : "entries"}?
             </span>
           )}
           <Button
@@ -83,7 +82,7 @@ export function TagItem({ tag, onUpdate, onDelete }: TagItemProps) {
             size="sm"
             onClick={handleDelete}
             loading={isDeleting}
-            title="Подтвердить удаление"
+            title="Confirm delete"
           >
             <Check size={13} />
           </Button>
@@ -92,7 +91,7 @@ export function TagItem({ tag, onUpdate, onDelete }: TagItemProps) {
             size="sm"
             onClick={() => setShowDeleteConfirm(false)}
             disabled={isDeleting}
-            title="Отмена"
+            title="Cancel"
           >
             <X size={13} />
           </Button>
@@ -100,19 +99,14 @@ export function TagItem({ tag, onUpdate, onDelete }: TagItemProps) {
       ) : (
         /* Action buttons — visible on hover */
         <div className="flex shrink-0 items-center gap-1 opacity-0 transition-opacity group-hover:opacity-100">
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => setIsEditing(true)}
-            title="Редактировать"
-          >
+          <Button variant="ghost" size="sm" onClick={() => setIsEditing(true)} title="Edit">
             <Pencil size={14} />
           </Button>
           <Button
             variant="ghost"
             size="sm"
             onClick={() => setShowDeleteConfirm(true)}
-            title="Удалить"
+            title="Delete"
             className="text-error hover:text-error"
           >
             <Trash2 size={14} />

@@ -38,11 +38,11 @@ export function TagForm({ initialData, onSave, onCancel, isSaving = false }: Tag
 
     const trimmed = name.trim().toLowerCase();
     if (!trimmed) {
-      setNameError("Название обязательно");
+      setNameError("Name is required");
       return;
     }
     if (trimmed.length > 30) {
-      setNameError("Максимум 30 символов");
+      setNameError("Maximum 30 characters");
       return;
     }
     setNameError(null);
@@ -57,10 +57,10 @@ export function TagForm({ initialData, onSave, onCancel, isSaving = false }: Tag
       <div className="flex flex-col gap-3 sm:flex-row sm:items-start">
         <div className="flex-1">
           <Input
-            label="Название"
+            label="Name"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            placeholder="Название тега"
+            placeholder="Tag name"
             error={nameError ?? undefined}
             disabled={isSaving}
             autoFocus
@@ -68,16 +68,16 @@ export function TagForm({ initialData, onSave, onCancel, isSaving = false }: Tag
           />
         </div>
         <div className="shrink-0">
-          <p className="mb-1 text-sm font-medium text-text-2">Цвет</p>
+          <p className="mb-1 text-sm font-medium text-text-2">Color</p>
           <ColorPicker value={color} onChange={setColor} />
         </div>
       </div>
       <div className="flex justify-end gap-2">
         <Button type="button" variant="ghost" size="sm" onClick={onCancel} disabled={isSaving}>
-          Отмена
+          Cancel
         </Button>
         <Button type="submit" variant="primary" size="sm" loading={isSaving}>
-          Сохранить
+          Save
         </Button>
       </div>
     </form>

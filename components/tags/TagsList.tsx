@@ -40,7 +40,7 @@ export function TagsList({ initialTags }: TagsListProps) {
       });
 
       if (res.status === 409) {
-        toast.error("Тег с таким названием уже существует");
+        toast.error("A tag with this name already exists");
         return;
       }
       if (!res.ok) throw new Error("Failed to create tag");
@@ -48,9 +48,9 @@ export function TagsList({ initialTags }: TagsListProps) {
       const created: TagApiItem = await res.json();
       setTags((prev) => [created, ...prev].sort((a, b) => a.name.localeCompare(b.name)));
       setShowNewForm(false);
-      toast.success(`Тег «${created.name}» создан`);
+      toast.success(`Tag "${created.name}" created`);
     } catch {
-      toast.error("Не удалось создать тег");
+      toast.error("Failed to create tag");
     } finally {
       setIsCreating(false);
     }
@@ -66,20 +66,20 @@ export function TagsList({ initialTags }: TagsListProps) {
     });
 
     if (res.status === 409) {
-      toast.error("Тег с таким названием уже существует");
+      toast.error("A tag with this name already exists");
       throw new Error("Conflict");
     }
     if (!res.ok) throw new Error("Failed to update tag");
 
     const updated: TagApiItem & { _count?: unknown } = await res.json();
 
-    // API PUT возвращает Tag без usageCount — сохраняем прежний
+    // API PUT returns Tag without usageCount — keep the old one
     setTags((prev) =>
       prev
         .map((t) => (t.id === id ? { ...t, name: updated.name, color: updated.color } : t))
         .sort((a, b) => a.name.localeCompare(b.name))
     );
-    toast.success("Тег обновлён");
+    toast.success("Tag updated");
   };
 
   // ── Delete ────────────────────────────────────────────────────────────────
@@ -89,7 +89,7 @@ export function TagsList({ initialTags }: TagsListProps) {
     if (!res.ok && res.status !== 404) throw new Error("Failed to delete tag");
 
     setTags((prev) => prev.filter((t) => t.id !== id));
-    toast.success("Тег удалён");
+    toast.success("Tag deleted");
   };
 
   // ── Render ────────────────────────────────────────────────────────────────
@@ -98,10 +98,10 @@ export function TagsList({ initialTags }: TagsListProps) {
     <div className="flex flex-col gap-4">
       {/* Header row */}
       <div className="flex items-center justify-between">
-        <h2 className="text-lg font-semibold text-text-1">Теги</h2>
+        <h2 className="text-lg font-semibold text-text-1">Tags</h2>
         <Button variant="primary" size="sm" onClick={() => setShowNewForm((v) => !v)}>
           <Plus size={14} />
-          Новый тег
+          New tag
         </Button>
       </div>
 
@@ -117,10 +117,10 @@ export function TagsList({ initialTags }: TagsListProps) {
       {/* Tags list */}
       {tags.length === 0 && !showNewForm ? (
         <div className="flex flex-col items-center gap-3 rounded-lg border border-border bg-surface py-12 text-center">
-          <p className="text-text-2">У вас пока нет тегов.</p>
+          <p className="text-text-2">You don&apos;t have any tags yet.</p>
           <Button variant="primary" size="sm" onClick={() => setShowNewForm(true)}>
             <Plus size={14} />
-            Создать первый тег
+            Create first tag
           </Button>
         </div>
       ) : (

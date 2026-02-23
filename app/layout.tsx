@@ -23,7 +23,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Time Tracker",
-  description: "Веб-приложение для учёта рабочего времени",
+  description: "Track your work time effortlessly",
 };
 
 /**
@@ -37,7 +37,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ru" className={`${geistSans.variable} ${geistMono.variable}`}>
+    <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
       <body className="bg-bg font-sans text-text-1 antialiased">
         <SessionProvider>
           <ToastProvider>{children}</ToastProvider>

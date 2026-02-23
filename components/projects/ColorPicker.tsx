@@ -56,7 +56,7 @@ export function ColorPicker({ value, onChange }: ColorPickerProps) {
     if (!customInput) return;
     const normalized = customInput.startsWith("#") ? customInput : `#${customInput}`;
     if (!HEX_REGEX.test(normalized)) {
-      setHexError("Неверный формат HEX (#RRGGBB)");
+      setHexError("Invalid HEX format (#RRGGBB)");
     }
   };
 

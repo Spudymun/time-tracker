@@ -50,10 +50,10 @@ export function ProjectForm({ initialData, onSave, onCancel, isSaving = false }:
 
     const trimmedName = name.trim();
     if (!trimmedName) {
-      setNameError("Название обязательно");
+      setNameError("Name is required");
       valid = false;
     } else if (trimmedName.length > 50) {
-      setNameError("Максимум 50 символов");
+      setNameError("Maximum 50 characters");
       valid = false;
     } else {
       setNameError(null);
@@ -63,7 +63,7 @@ export function ProjectForm({ initialData, onSave, onCancel, isSaving = false }:
     if (estimatedHours.trim() !== "") {
       const val = parseFloat(estimatedHours);
       if (isNaN(val) || val <= 0) {
-        setEstimatedHoursError("Должно быть > 0");
+        setEstimatedHoursError("Must be > 0");
         valid = false;
       } else {
         setEstimatedHoursError(null);
@@ -77,7 +77,7 @@ export function ProjectForm({ initialData, onSave, onCancel, isSaving = false }:
     if (hourlyRate.trim() !== "") {
       const val = parseFloat(hourlyRate);
       if (isNaN(val) || val < 0) {
-        setHourlyRateError("Должно быть ≥ 0");
+        setHourlyRateError("Must be ≥ 0");
         valid = false;
       } else {
         setHourlyRateError(null);
@@ -111,10 +111,10 @@ export function ProjectForm({ initialData, onSave, onCancel, isSaving = false }:
       <div className="flex flex-col gap-3 sm:flex-row sm:items-start">
         <div className="flex-1">
           <Input
-            label="Название"
+            label="Name"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            placeholder="Имя проекта"
+            placeholder="Project name"
             error={nameError ?? undefined}
             disabled={isSaving}
             autoFocus
@@ -122,7 +122,7 @@ export function ProjectForm({ initialData, onSave, onCancel, isSaving = false }:
           />
         </div>
         <div className="shrink-0">
-          <p className="mb-1 text-sm font-medium text-text-2">Цвет</p>
+          <p className="mb-1 text-sm font-medium text-text-2">Color</p>
           <ColorPicker value={color} onChange={setColor} />
         </div>
       </div>
@@ -131,29 +131,29 @@ export function ProjectForm({ initialData, onSave, onCancel, isSaving = false }:
       <div className="flex flex-col gap-3 sm:flex-row sm:items-start">
         <div className="flex-1">
           <Input
-            label="Бюджет (часы)"
+            label="Budget (hours)"
             type="number"
             min="0.1"
             step="0.5"
             value={estimatedHours}
             onChange={(e) => setEstimatedHours(e.target.value)}
-            placeholder="Напр. 40"
+            placeholder="e.g. 40"
             error={estimatedHoursError ?? undefined}
-            hint="Необязательно"
+            hint="Optional"
             disabled={isSaving}
           />
         </div>
         <div className="flex-1">
           <Input
-            label="Ставка ($/ч)"
+            label="Rate ($/h)"
             type="number"
             min="0"
             step="0.5"
             value={hourlyRate}
             onChange={(e) => setHourlyRate(e.target.value)}
-            placeholder="Напр. 80"
+            placeholder="e.g. 80"
             error={hourlyRateError ?? undefined}
-            hint="Необязательно"
+            hint="Optional"
             disabled={isSaving}
           />
         </div>
@@ -162,10 +162,10 @@ export function ProjectForm({ initialData, onSave, onCancel, isSaving = false }:
       {/* Actions */}
       <div className="flex justify-end gap-2">
         <Button type="button" variant="ghost" size="sm" onClick={onCancel} disabled={isSaving}>
-          Отмена
+          Cancel
         </Button>
         <Button type="submit" variant="primary" size="sm" loading={isSaving}>
-          Сохранить
+          Save
         </Button>
       </div>
     </form>

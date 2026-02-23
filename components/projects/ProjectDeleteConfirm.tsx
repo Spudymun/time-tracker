@@ -27,27 +27,22 @@ export function ProjectDeleteConfirm({
     <Modal
       open
       onClose={onCancel}
-      title="Удалить проект?"
-      description={`«${projectName}» будет удалён безвозвратно.`}
+      title="Delete project?"
+      description={`"${projectName}" will be deleted permanently.`}
     >
       {entryCount > 0 && (
         <div className="mb-4 rounded-md border border-warning-bg bg-warning-bg px-3 py-2 text-sm text-warning-fg">
-          <strong>{entryCount}</strong>{" "}
-          {entryCount === 1
-            ? "запись потеряет"
-            : entryCount < 5
-              ? "записи потеряют"
-              : "записей потеряют"}{" "}
-          привязку к проекту (сами записи не удалятся).
+          <strong>{entryCount}</strong> {entryCount === 1 ? "entry will lose" : "entries will lose"}{" "}
+          its project assignment (the entries themselves won&apos;t be deleted).
         </div>
       )}
 
       <div className="flex justify-end gap-2">
         <Button variant="ghost" size="sm" onClick={onCancel} disabled={isDeleting}>
-          Отмена
+          Cancel
         </Button>
         <Button variant="danger" size="sm" onClick={onConfirm} loading={isDeleting}>
-          Удалить
+          Delete
         </Button>
       </div>
     </Modal>

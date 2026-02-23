@@ -43,7 +43,7 @@ export function TagChip({ name, color, onRemove }: TagChipProps) {
           type="button"
           onClick={onRemove}
           className="rounded-full opacity-70 transition-opacity hover:opacity-100 focus-visible:ring-1 focus-visible:ring-offset-1 focus-visible:outline-none"
-          aria-label={`Удалить тег ${name}`}
+          aria-label={`Remove tag ${name}`}
           style={{ color: textColor }}
         >
           <X size={10} />
