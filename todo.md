@@ -39,7 +39,7 @@
 - [x] Создать components/ui/TagChip.tsx (color, name, onRemove?)
 - [x] Создать components/ui/Select.tsx (базовый select, forwardRef, label, error, placeholder)
 - [x] Создать lib/utils/api-client.ts (apiFetch с 401 interceptor → redirect /login)
-- [ ] Обновить stores (заменить fetch на apiFetch в timer-store.ts и entries-store.ts)
+- [x] Обновить stores (заменить fetch на apiFetch в timer-store.ts и entries-store.ts)
 
 ## Auth (Prompt 0)
 
@@ -202,14 +202,14 @@
 
 ## Системные страницы + Обработка ошибок (Промпт 16а)
 
-- [ ] Создать app/not-found.tsx (центрированный 404 + кнопка Go to Dashboard)
-- [ ] Создать app/error.tsx ("use client", reset() + кнопка Try again)
-- [ ] Создать app/global-error.tsx ("use client", minimal HTML + Reload)
-- [ ] Создать app/loading.tsx (центрированный <Spinner size="lg" />)
-- [ ] Создать app/(main)/loading.tsx (skeleton: Dashboard placeholder + 3 строки entries)
-- [ ] Создать app/projects/loading.tsx (skeleton: 4-5 строк проектов)
-- [ ] Создать app/reports/loading.tsx (skeleton: selector + 5 строк таблицы)
-- [ ] Создать app/(auth)/login/loading.tsx и register/loading.tsx (<Spinner size="md" />)
+- [x] Создать app/not-found.tsx (центрированный 404 + кнопка Go to Dashboard)
+- [x] Создать app/error.tsx ("use client", reset() + кнопка Try again)
+- [x] Создать app/global-error.tsx ("use client", minimal HTML + Reload)
+- [x] Создать app/loading.tsx (центрированный <Spinner size="lg" />)
+- [x] Создать app/(main)/loading.tsx (skeleton: Dashboard placeholder + 3 строки entries)
+- [x] Создать app/projects/loading.tsx (skeleton: 4-5 строк проектов)
+- [x] Создать app/reports/loading.tsx (skeleton: selector + 5 строк таблицы)
+- [x] Создать app/(auth)/login/loading.tsx и register/loading.tsx (<Spinner size="md" />)
 
 ## Готовность к MVP
 
