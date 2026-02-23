@@ -261,3 +261,142 @@ app/api/dashboard/route.ts:
 
 Follow #file:.github/instructions/api-routes.instructions.md
 ```
+
+---
+
+## Промпт 5: Services
+
+```
+Read #file:spec/FEATURE_reports.md
+
+Create lib/services/report-service.ts:
+
+function buildReport(entries: TimeEntryWithRelations[], from: Date, to: Date): ReportData
+  - Groups completed entries by projectId
+  - Calculates totalSeconds, billableSeconds, entryCount, percentage for each project
+  - Computes earnings = billableSeconds / 3600 * project.hourlyRate (null if no rate)
+  - Returns { from, to, totalSeconds, billableSeconds, totalEarnings, byProject[] }
+    where totalEarnings = sum of all project earnings (null if none have a rate)
+  - byProject entries include: isArchived flag, earnings field
+
+function buildTagReport(entries: TimeEntryWithRelations[]): TagReportData
+  - Groups completed entries by tag (a single entry contributes to ALL its tags)
+  - Entries without tags go to group { tagId: null, tagName: null }
+  - Returns byTag[]: { tagId, tagName, color, totalSeconds, billableSeconds, entryCount, percentage }
+
+function calcEarnings(billableSeconds: number, hourlyRate: number | null): number | null
+  - Returns null if hourlyRate is null; else round(billableSeconds / 3600 * hourlyRate, 2)
+
+function entriesToCsv(entries: TimeEntryWithRelations[]): string
+  - Generates CSV with headers: Date,Start,Stop,Duration (h),Project,Description,Tags,Billable
+  - One row per entry
+  - Tags: comma-separated in quotes
+  - Billable: "Yes"/"No"
+  - Duration: rounded to 2 decimal hours
+
+function buildDashboard(entries: TimeEntryWithRelations[], from: Date, to: Date): DashboardData
+  - Groups by day (Mon–Sun)
+  - Groups within day by project (max 7, rest = "Other")
+  - Calculates topProjects (top 5 by totalSeconds), including earnings per project
+  - Computes totalEarnings (null if no project has hourlyRate)
+
+Write tests in lib/services/report-service.test.ts with edge cases:
+- Empty entries
+- Single entry
+- Multiple projects
+- Entry with multiple tags (appears in each tag group)
+- calcEarnings: null rate, zero seconds, rounding
+- CSV escaping
+
+Follow #file:.github/instructions/services.instructions.md
+```
+
+---
+
+## Промпт 6: Stores (Zustand)
+
+```
+Read #file:spec/FEATURE_timer.md and #file:spec/FEATURE_entries.md
+Read #file:.github/instructions/stores.instructions.md
+
+Create:
+
+lib/stores/timer-store.ts:
+  State: activeEntry (TimeEntryWithRelations | null), elapsedSeconds (number), isLoading (boolean)
+  Actions:
+    - initTimer(): fetch /api/time-entries/active, set activeEntry
+    - startTimer(data: StartTimerInput): POST /api/time-entries → set activeEntry, reset elapsed
+    - stopTimer(): POST /api/time-entries/:id/stop → set activeEntry = null
+    - tick(): elapsedSeconds += 1 (called from useEffect)
+
+lib/stores/entries-store.ts:
+  State: entries (TimeEntryWithRelations[]), isLoading (boolean)
+  Actions:
+    - fetchEntries(from, to): GET with date params
+    - updateEntry(id, data): optimistic update → PUT
+    - deleteEntry(id): optimistic remove → DELETE
+    - continueEntry(id): POST /continue → updates timer store via setter
+    - addEntry(entry): prepend to list (called from timer-store on stop)
+
+No direct Prisma imports in stores — only fetch() calls to API routes.
+```
+
+---
+
+## Промпт 6а: UI Примитивы + Design System
+
+> ❗️ Этот промпт должен быть выполнен ДО любых UI-промптов (7–15). Все компоненты фич используют примитивы из `components/ui/`.
+
+```
+Read #file:spec/DESIGN_SYSTEM.md
+Read #file:spec/UI_STATES.md
+
+Install lucide-react if not present: npm install lucide-react
+
+Create components/ui/:
+
+Spinner.tsx — SVG-spinner, sizes: sm (16px) | md (24px) | lg (48px)
+  Используется везде, где есть isLoading. Не класс, я — functional component.
+
+Button.tsx — props: variant (primary|secondary|danger|ghost), size (sm|md|lg),
+  loading (boolean), disabled (boolean)
+  При loading=true — показывать <Spinner size="sm" /> + кнопка disabled
+  Все интерактивные состояния: hover, focus-visible, disabled, active:scale-95
+  Цвета из spec/DESIGN_SYSTEM.md (primary=indigo-600, danger=red-500, ...)
+
+Input.tsx — base text input, props: label?, error?, + all HTMLInputElement props via forward ref
+  Ошибка выводится красным текстом под полем
+  focus-visible:ring-2 focus-visible:ring-indigo-500
+
+Modal.tsx — portal modal
+  Props: open, onClose, title, children
+  Backdrop: bg-black/50; закрывается по Escape и клику на backdrop
+  createPortal в document.body; блокирует скролл пока открыт
+  aria: role="dialog" aria-modal="true" aria-labelledby={titleId}
+  На мобайле: w-full rounded-t-xl (bottom sheet)
+
+Toast.tsx + useToast hook — глобальная система уведомлений
+  useToast() возвращает { toast: { success, error, info } }
+  Auto-dismiss: 3с (success/info), 5с (error)
+  Макс. 3 одновременных; позиция: правый нижний угол
+  role="alert" для screen readers
+  ToastProvider добавить в app/layout.tsx
+
+Badge.tsx — variant: default | archived | billable
+TagChip.tsx — props: name, color (#RRGGBB), onRemove? — переиспользуется в TimerBar TagSelect и EntryItem
+
+Create lib/utils/api-client.ts:
+  export async function apiFetch(url: string, options?: RequestInit): Promise<Response>
+  Если res.status === 401:
+    window.location.href = '/login';  // полный редирект, не router.push
+    throw new Error('Unauthorized');
+  Все Zustand stores используют apiFetch вместо fetch напрямую
+
+Rules (from spec/DESIGN_SYSTEM.md):
+- NO inline style={{}} except dynamic colors (e.g., style={{ backgroundColor: project.color }})
+- NO bare <button> elements outside Button.tsx
+- ALL loading states use <Spinner />, never "Loading..." text
+- ALL interactive elements MUST have hover + focus-visible + disabled styles
+
+Follow #file:spec/DESIGN_SYSTEM.md
+```

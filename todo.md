@@ -28,17 +28,17 @@
 
 ## UI Примитивы + Design System (Промпт 6а)
 
-- [ ] Установить lucide-react (`npm install lucide-react`)
-- [ ] Создать components/ui/Spinner.tsx (sizes: sm|md|lg)
-- [ ] Создать components/ui/Button.tsx (варианты primary/secondary/danger/ghost, loading, disabled)
-- [ ] Создать components/ui/Input.tsx (label, error, forwardRef)
-- [ ] Создать components/ui/Modal.tsx (portal, Escape, backdrop, scroll lock, aria)
-- [ ] Создать components/ui/Toast.tsx + useToast hook (success/error/info, auto-dismiss 3s/5s)
-- [ ] Добавить ToastProvider в app/layout.tsx
-- [ ] Создать components/ui/Badge.tsx (variant: default|archived|billable)
-- [ ] Создать components/ui/TagChip.tsx (color, name, onRemove?)
+- [x] Установить lucide-react (`npm install lucide-react`)
+- [x] Создать components/ui/Spinner.tsx (sizes: sm|md|lg)
+- [x] Создать components/ui/Button.tsx (варианты primary/secondary/danger/ghost, loading, disabled)
+- [x] Создать components/ui/Input.tsx (label, error, forwardRef)
+- [x] Создать components/ui/Modal.tsx (portal, Escape, backdrop, scroll lock, aria)
+- [x] Создать components/ui/Toast.tsx + useToast hook (success/error/info, auto-dismiss 3s/5s)
+- [x] Добавить ToastProvider в app/layout.tsx
+- [x] Создать components/ui/Badge.tsx (variant: default|archived|billable)
+- [x] Создать components/ui/TagChip.tsx (color, name, onRemove?)
 - [ ] Создать components/ui/Select.tsx (базовый select)
-- [ ] Создать lib/utils/api-client.ts (apiFetch с 401 interceptor → redirect /login)
+- [x] Создать lib/utils/api-client.ts (apiFetch с 401 interceptor → redirect /login)
 - [ ] Обновить stores (заменить fetch на apiFetch в timer-store.ts и entries-store.ts)
 
 ## Auth (Prompt 0)
@@ -158,7 +158,7 @@
 
 ## UI — Tags (FEATURE_tags.md)
 
-- [ ] TagChip.tsx (цветной chip, переиспользуемый)
+- [x] TagChip.tsx (цветной chip, переиспользуемый) — создан в Промпте 6а
 - [ ] TagForm.tsx
 - [ ] TagItem.tsx (display + edit)
 - [ ] TagsList.tsx

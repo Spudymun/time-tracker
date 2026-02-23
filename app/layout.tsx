@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { ToastProvider } from "@/components/ui/Toast";
 
 /**
  * Geist — шрифт Vercel (open-source, 2024).
@@ -31,7 +32,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ru" className={`${geistSans.variable} ${geistMono.variable}`}>
-      <body className="bg-bg text-text-1 font-sans antialiased">{children}</body>
+      <body className="bg-bg font-sans text-text-1 antialiased">
+        <ToastProvider>{children}</ToastProvider>
+      </body>
     </html>
   );
 }
