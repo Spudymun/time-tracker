@@ -68,19 +68,19 @@ idle → running → idle
     (Continue с другой записи тоже переключает running → running через idle)
 ```
 
-| Состояние | UI | Кнопка |
-|-----------|----|----|
-| idle | Поля пустые, счётчик 00:00:00 | «Start» (зелёная) |
-| running | Поля с данными активной записи, тикающий счётчик | «Stop» (красная) |
+| Состояние | UI                                               | Кнопка            |
+| --------- | ------------------------------------------------ | ----------------- |
+| idle      | Поля пустые, счётчик 00:00:00                    | «Start» (зелёная) |
+| running   | Поля с данными активной записи, тикающий счётчик | «Stop» (красная)  |
 
 ## API
 
-| Метод | Endpoint | Описание |
-|-------|----------|---------|
-| GET | /api/time-entries/active | Проверить есть ли активная запись (при загрузке приложения) |
-| POST | /api/time-entries | Создать запись (startTimer): `{ description?, projectId?, tagIds?, billable?, startedAt? }` |
-| POST | /api/time-entries/[id]/stop | Остановить таймер: `{}` → выставляет stoppedAt + durationSeconds |
-| GET | /api/task-names | Получить список уникальных описаний для автодополнения: `?q=` |
+| Метод | Endpoint                    | Описание                                                                                    |
+| ----- | --------------------------- | ------------------------------------------------------------------------------------------- |
+| GET   | /api/time-entries/active    | Проверить есть ли активная запись (при загрузке приложения)                                 |
+| POST  | /api/time-entries           | Создать запись (startTimer): `{ description?, projectId?, tagIds?, billable?, startedAt? }` |
+| POST  | /api/time-entries/[id]/stop | Остановить таймер: `{}` → выставляет stoppedAt + durationSeconds                            |
+| GET   | /api/task-names             | Получить список уникальных описаний для автодополнения: `?q=`                               |
 
 ### Request Schema (POST /api/time-entries)
 
@@ -128,12 +128,12 @@ components/timer/
 // lib/stores/timer-store.ts
 interface TimerStore {
   activeEntry: TimeEntryWithRelations | null;
-  elapsedSeconds: number;  // вычисляется на клиенте
+  elapsedSeconds: number; // вычисляется на клиенте
   isLoading: boolean;
 
   setActiveEntry: (entry: TimeEntryWithRelations | null) => void;
   startTimer: (data: StartTimerInput) => Promise<void>;
   stopTimer: () => Promise<void>;
-  tick: () => void;  // вызывается из useEffect каждую секунду
+  tick: () => void; // вызывается из useEffect каждую секунду
 }
 ```

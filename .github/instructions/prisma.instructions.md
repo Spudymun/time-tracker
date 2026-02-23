@@ -77,7 +77,7 @@ for (const p of projects) {
 
 // ✅ Один JOIN-запрос (Prisma v7+)
 const projects = await prisma.project.findMany({
-  relationLoadStrategy: "join",  // один SQL с JOIN
+  relationLoadStrategy: "join", // один SQL с JOIN
   include: { timeEntries: true },
 });
 ```

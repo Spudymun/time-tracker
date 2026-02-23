@@ -44,7 +44,7 @@
 ### Happy Path — заработок по проектам
 
 1. Если у проекта есть `hourlyRate`, в таблице появляется дополнительный столбец «Заработано»
-2. В строке проекта: `billableSeconds / 3600 * hourlyRate` 
+2. В строке проекта: `billableSeconds / 3600 * hourlyRate`
 3. В строке «Total»: сумма по всем проектам со ставкой
 
 ### Happy Path — CSV Export
@@ -83,20 +83,20 @@ Date,Start,Stop,Duration (h),Project,Description,Tags,Billable
 
 ## API
 
-| Метод | Endpoint | Описание |
-|-------|----------|---------|
-| GET | /api/reports?from=&to= | Агрегированный отчёт |
-| GET | /api/reports/export?from=&to= | CSV файл |
+| Метод | Endpoint                      | Описание             |
+| ----- | ----------------------------- | -------------------- |
+| GET   | /api/reports?from=&to=        | Агрегированный отчёт |
+| GET   | /api/reports/export?from=&to= | CSV файл             |
 
 ### Response Schema (GET /api/reports)
 
 ```typescript
 {
-  from: string;  // ISO date
+  from: string; // ISO date
   to: string;
   totalSeconds: number;
   billableSeconds: number;
-  totalEarnings: number | null;  // сумма по всем проектам со ставкой
+  totalEarnings: number | null; // сумма по всем проектам со ставкой
   byProject: Array<{
     projectId: string | null;
     projectName: string | null;
@@ -105,8 +105,8 @@ Date,Start,Stop,Duration (h),Project,Description,Tags,Billable
     totalSeconds: number;
     billableSeconds: number;
     entryCount: number;
-    percentage: number;          // от общего totalSeconds
-    earnings: number | null;     // billableSeconds / 3600 * hourlyRate
+    percentage: number; // от общего totalSeconds
+    earnings: number | null; // billableSeconds / 3600 * hourlyRate
   }>;
   byTag: Array<{
     tagId: string | null;
@@ -138,8 +138,8 @@ components/reports/
 
 ```typescript
 // lib/services/report-service.ts
-export function buildReportFromEntries(entries: TimeEntry[]): ReportData
-export function buildTagReportFromEntries(entries: TimeEntryWithRelations[]): TagReportData
-export function entriesToCsv(entries: TimeEntryWithRelations[]): string
-export function calcEarnings(billableSeconds: number, hourlyRate: number | null): number | null
+export function buildReportFromEntries(entries: TimeEntry[]): ReportData;
+export function buildTagReportFromEntries(entries: TimeEntryWithRelations[]): TagReportData;
+export function entriesToCsv(entries: TimeEntryWithRelations[]): string;
+export function calcEarnings(billableSeconds: number, hourlyRate: number | null): number | null;
 ```

@@ -42,19 +42,19 @@
 
 ## API
 
-| Метод | Endpoint | Описание |
-|-------|----------|---------|
-| GET | /api/tags | Список всех тегов + usageCount |
-| POST | /api/tags | Создать тег |
-| PUT | /api/tags/[id] | Обновить тег |
-| DELETE | /api/tags/[id] | Удалить тег |
+| Метод  | Endpoint       | Описание                       |
+| ------ | -------------- | ------------------------------ |
+| GET    | /api/tags      | Список всех тегов + usageCount |
+| POST   | /api/tags      | Создать тег                    |
+| PUT    | /api/tags/[id] | Обновить тег                   |
+| DELETE | /api/tags/[id] | Удалить тег                    |
 
 ### Request Schema (POST/PUT)
 
 ```typescript
 {
-  name: string;   // 1..30, trim, lowercase
-  color: string;  // #RRGGBB
+  name: string; // 1..30, trim, lowercase
+  color: string; // #RRGGBB
 }
 ```
 
@@ -66,7 +66,7 @@
   name: string;
   color: string;
   createdAt: string;
-  usageCount: number;  // сколько TimeEntry используют этот тег
+  usageCount: number; // сколько TimeEntry используют этот тег
 }
 ```
 

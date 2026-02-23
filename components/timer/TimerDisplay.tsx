@@ -23,7 +23,7 @@ export function TimerDisplay() {
   }, [activeEntry, tick]);
 
   return (
-    <span className="timer-display tabular-nums text-text-1" aria-live="off">
+    <span className="timer-display text-text-1 tabular-nums" aria-live="off">
       {formatDuration(elapsedSeconds)}
     </span>
   );

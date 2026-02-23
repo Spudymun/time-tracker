@@ -18,7 +18,7 @@ kebab-case        → все файлы и папки
 PascalCase        → только компоненты (файл = имя компонента)
   ProjectCard.tsx
   ActiveTimer.tsx
-  
+
 page.tsx, layout.tsx, route.ts  → Next.js конвенции, как есть
 ```
 
@@ -118,10 +118,10 @@ function SearchBar({ onFilterTextChange }: SearchBarProps) {
 }
 
 // ❌ Плохо
-onClick={handleX}  // как prop
-onChange={handleX}  // как prop (если это ваш компонент)
+onClick = { handleX }; // как prop
+onChange = { handleX }; // как prop (если это ваш компонент)
 // ✅ Хорошо — однозначно читается и native DOM подтверждает
-onClick={handleX}  // native button — prop всегда on*
+onClick = { handleX }; // native button — prop всегда on*
 ```
 
 ## Запрещённые паттерны

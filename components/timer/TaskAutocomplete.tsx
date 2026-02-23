@@ -114,13 +114,13 @@ export function TaskAutocomplete({
         autoComplete="off"
         className={[
           "h-8 w-full rounded-md border border-border bg-surface px-3 text-sm text-text-1",
-          "placeholder:text-text-3 transition-colors duration-150",
-          "focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary",
+          "transition-colors duration-150 placeholder:text-text-3",
+          "focus:border-primary focus:ring-2 focus:ring-primary focus:outline-none",
           "disabled:cursor-not-allowed disabled:opacity-50",
         ].join(" ")}
       />
       {open && suggestions.length > 0 && (
-        <ul className="absolute left-0 top-9 z-50 max-h-48 w-full overflow-y-auto rounded-md border border-border bg-surface shadow-lg">
+        <ul className="absolute top-9 left-0 z-50 max-h-48 w-full overflow-y-auto rounded-md border border-border bg-surface shadow-lg">
           {suggestions.map((suggestion, index) => (
             <li key={suggestion}>
               <button
@@ -130,7 +130,9 @@ export function TaskAutocomplete({
                 className={[
                   "w-full truncate px-3 py-2 text-left text-sm",
                   "focus-visible:bg-surface-2 focus-visible:outline-none",
-                  index === activeIndex ? "bg-surface-2 text-text-1" : "text-text-2 hover:bg-surface-2",
+                  index === activeIndex
+                    ? "bg-surface-2 text-text-1"
+                    : "text-text-2 hover:bg-surface-2",
                 ]
                   .filter(Boolean)
                   .join(" ")}

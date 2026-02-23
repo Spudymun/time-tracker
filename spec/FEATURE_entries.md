@@ -85,12 +85,12 @@
 
 ## API
 
-| Метод | Endpoint | Описание |
-|-------|----------|---------|
-| GET | /api/time-entries?from=&to=&projectId=&tagId=&billable=&q= | Список записей с фильтрами |
-| PUT | /api/time-entries/[id] | Обновить запись |
-| DELETE | /api/time-entries/[id] | Удалить запись |
-| POST | /api/time-entries/[id]/continue | Создать копию записи как новую активную |
+| Метод  | Endpoint                                                   | Описание                                |
+| ------ | ---------------------------------------------------------- | --------------------------------------- |
+| GET    | /api/time-entries?from=&to=&projectId=&tagId=&billable=&q= | Список записей с фильтрами              |
+| PUT    | /api/time-entries/[id]                                     | Обновить запись                         |
+| DELETE | /api/time-entries/[id]                                     | Удалить запись                          |
+| POST   | /api/time-entries/[id]/continue                            | Создать копию записи как новую активную |
 
 ### Query Params (GET /api/time-entries)
 
@@ -141,7 +141,7 @@ interface EntriesStore {
   updateEntry: (id: string, data: UpdateEntryInput) => Promise<void>;
   deleteEntry: (id: string) => Promise<void>;
   continueEntry: (id: string) => Promise<void>;
-  addEntry: (entry: TimeEntryWithRelations) => void;  // после старта таймера
+  addEntry: (entry: TimeEntryWithRelations) => void; // после старта таймера
   replaceActiveEntry: (entry: TimeEntryWithRelations | null) => void;
 }
 ```

@@ -5,17 +5,17 @@
 
 ## Глоссарий
 
-| Термин | Определение |
-| ------- | ------------ |
-| User | Зарегистрированный пользователь. Все данные изолированы по userId |
-| TimeEntry | Запись об отрезке рабочего времени. Активная = stoppedAt нулл, завершённая = есть stoppedAt |
-| ActiveEntry | Единственная запись с stoppedAt = null. Одна **на пользователя** |
-| Project | Проект / клиент, к которому привязываются TimeEntry |
-| Tag | Метка для классификации (например: "meeting", "dev", "design") |
-| Billable | Флаг на TimeEntry: время выставляется клиенту |
-| Duration | Длительность в секундах, вычисляется при остановке |
-| Estimate | Плановые часы на проект (Project.estimatedHours). Используется для отслеживания выхода за бюджет |
-| HourlyRate | Почасовая ставка проекта. Позволяет вычислить заработок: billableSeconds / 3600 * hourlyRate |
+| Термин          | Определение                                                                                       |
+| --------------- | ------------------------------------------------------------------------------------------------- |
+| User            | Зарегистрированный пользователь. Все данные изолированы по userId                                 |
+| TimeEntry       | Запись об отрезке рабочего времени. Активная = stoppedAt нулл, завершённая = есть stoppedAt       |
+| ActiveEntry     | Единственная запись с stoppedAt = null. Одна **на пользователя**                                  |
+| Project         | Проект / клиент, к которому привязываются TimeEntry                                               |
+| Tag             | Метка для классификации (например: "meeting", "dev", "design")                                    |
+| Billable        | Флаг на TimeEntry: время выставляется клиенту                                                     |
+| Duration        | Длительность в секундах, вычисляется при остановке                                                |
+| Estimate        | Плановые часы на проект (Project.estimatedHours). Используется для отслеживания выхода за бюджет  |
+| HourlyRate      | Почасовая ставка проекта. Позволяет вычислить заработок: billableSeconds / 3600 \* hourlyRate     |
 | ArchivedProject | Проект с isArchived=true. Не отображается в выпадающих списках, но его записи участвуют в отчётах |
 
 ## Сущности
@@ -37,6 +37,7 @@
 | updatedAt | DateTime (UTC) | да | Автоматически |
 
 **Constraints:**
+
 - `email` уникально по всей системе
 - `passwordHash` **никогда** не возвращается в API responses
 
@@ -76,6 +77,7 @@
 | updatedAt | DateTime (UTC) | да | Автоматически |
 
 **Constraints:**
+
 - `name` уникально **per-user** (Prisma: `@@unique([userId, name])`), включая архивированные
 - `color` регекс: `^#[0-9A-Fa-f]{6}$`
 - `estimatedHours` > 0 если задано
@@ -97,6 +99,7 @@
 | createdAt | DateTime (UTC) | да | Автоматически |
 
 **Constraints:**
+
 - `name` уникально per-user (Prisma: `@@unique([userId, name])`), lowercase-трим, макс 30 симв.
 
 ---
@@ -120,12 +123,14 @@
 | updatedAt | DateTime (UTC) | да | Автоматически |
 
 **Constraints:**
+
 - `stoppedAt` > `startedAt` (никогда раньше)
 - Одновременно может быть лишь **одна активная запись per User**
 - `description` nullable, но не пустая строка (trim и null)
 - `projectId` должен принадлежать тому же `userId` (проверяется в API route)
 
 **State Machine:**
+
 ```
 active (stoppedAt=null) → completed (stoppedAt≠null)
                             ↓
@@ -167,4 +172,3 @@ TimeEntry >──< Tag      (many-to-many через TimeEntryTag)
 | Project удалён | TimeEntry.projectId | SetNull |
 | Tag удалён | TimeEntryTag | Cascade |
 | TimeEntry удалён | TimeEntryTag | Cascade |
-

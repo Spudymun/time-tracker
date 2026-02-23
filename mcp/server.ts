@@ -1,9 +1,6 @@
 import { Server } from "@modelcontextprotocol/sdk/server/index.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
-import {
-  CallToolRequestSchema,
-  ListToolsRequestSchema,
-} from "@modelcontextprotocol/sdk/types.js";
+import { CallToolRequestSchema, ListToolsRequestSchema } from "@modelcontextprotocol/sdk/types.js";
 import { readFileSync, existsSync, readdirSync } from "fs";
 import { join, resolve } from "path";
 import { fileURLToPath } from "url";
@@ -36,7 +33,7 @@ function readWorkspaceFile(relativePath: string): string | null {
 
 const server = new Server(
   { name: "project-context", version: "1.0.0" },
-  { capabilities: { tools: {} } },
+  { capabilities: { tools: {} } }
 );
 
 // ─── Список инструментов ──────────────────────────────────────────────────
@@ -45,14 +42,12 @@ server.setRequestHandler(ListToolsRequestSchema, async () => ({
   tools: [
     {
       name: "read_spec",
-      description:
-        "Read the root spec.md — main project specification with requirements and scope",
+      description: "Read the root spec.md — main project specification with requirements and scope",
       inputSchema: { type: "object", properties: {}, required: [] },
     },
     {
       name: "read_feature",
-      description:
-        "Read detailed specification for a specific feature from spec/FEATURE_{name}.md",
+      description: "Read detailed specification for a specific feature from spec/FEATURE_{name}.md",
       inputSchema: {
         type: "object",
         properties: {
@@ -67,14 +62,12 @@ server.setRequestHandler(ListToolsRequestSchema, async () => ({
     },
     {
       name: "list_features",
-      description:
-        "List all available feature specifications in the spec/ directory",
+      description: "List all available feature specifications in the spec/ directory",
       inputSchema: { type: "object", properties: {}, required: [] },
     },
     {
       name: "get_domain",
-      description:
-        "Read DOMAIN.md — entities, relations, field definitions, and constraints",
+      description: "Read DOMAIN.md — entities, relations, field definitions, and constraints",
       inputSchema: { type: "object", properties: {}, required: [] },
     },
     {
@@ -91,10 +84,10 @@ server.setRequestHandler(ListToolsRequestSchema, async () => ({
     },
     {
       name: "get_vision",
-      description:
-        "Read VISION.md — MVP scope, target audience, and success metrics",
+      description: "Read VISION.md — MVP scope, target audience, and success metrics",
       inputSchema: { type: "object", properties: {}, required: [] },
-    },    {
+    },
+    {
       name: "get_design_system",
       description:
         "Read DESIGN_SYSTEM.md \u2014 design tokens, component rules, forbidden Tailwind classes, typography and spacing guidelines",
@@ -105,7 +98,8 @@ server.setRequestHandler(ListToolsRequestSchema, async () => ({
       description:
         "Read UI_STATES.md \u2014 empty states, loading skeletons, error states, 401 interceptor, accessibility rules",
       inputSchema: { type: "object", properties: {}, required: [] },
-    },  ],
+    },
+  ],
 }));
 
 // ─── Обработчики инструментов ─────────────────────────────────────────────
@@ -279,9 +273,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
 async function main() {
   const transport = new StdioServerTransport();
   await server.connect(transport);
-  process.stderr.write(
-    `[MCP] project-context server started. WORKSPACE_ROOT: ${WORKSPACE_ROOT}\n`,
-  );
+  process.stderr.write(`[MCP] project-context server started. WORKSPACE_ROOT: ${WORKSPACE_ROOT}\n`);
 }
 
 main().catch((error) => {

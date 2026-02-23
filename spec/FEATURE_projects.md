@@ -84,12 +84,12 @@
 
 ## API
 
-| Метод | Endpoint | Описание |
-|-------|----------|---------|
-| GET | /api/projects | Список всех проектов + totalSeconds |
-| POST | /api/projects | Создать проект |
-| PUT | /api/projects/[id] | Обновить проект |
-| DELETE | /api/projects/[id] | Удалить проект |
+| Метод  | Endpoint           | Описание                            |
+| ------ | ------------------ | ----------------------------------- |
+| GET    | /api/projects      | Список всех проектов + totalSeconds |
+| POST   | /api/projects      | Создать проект                      |
+| PUT    | /api/projects/[id] | Обновить проект                     |
+| DELETE | /api/projects/[id] | Удалить проект                      |
 
 ### Request Schema (POST/PUT)
 
@@ -114,10 +114,10 @@
   estimatedHours: number | null;
   hourlyRate: number | null;
   createdAt: string;
-  totalSeconds: number;      // сумма durationSeconds завершённых записей
-  billableSeconds: number;   // только billable=true
-  earnings: number | null;   // billableSeconds / 3600 * hourlyRate, null если нет ставки
-  estimateProgress: number | null;  // totalSeconds / estimatedHours / 3600 (0..n), null если нет естимейта
+  totalSeconds: number; // сумма durationSeconds завершённых записей
+  billableSeconds: number; // только billable=true
+  earnings: number | null; // billableSeconds / 3600 * hourlyRate, null если нет ставки
+  estimateProgress: number | null; // totalSeconds / estimatedHours / 3600 (0..n), null если нет естимейта
   entryCount: number;
 }
 ```

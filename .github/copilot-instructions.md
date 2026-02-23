@@ -119,9 +119,9 @@ types/
 - **ЕДИНСТВЕННАЯ библиотека стилей** — TailwindCSS v4 CSS-first
 - **Запрещены** `style={{}}` inline-стили (кроме `style={{ backgroundColor: color }}` для динамических цветов)
 - **Запрещены** Tailwind palette-классы напрямую: `bg-indigo-600`, `text-slate-400`, `bg-gray-100` — только семантические токены
-- **Обязательные классы текста**: `text-text-1` / `text-text-2` / `text-text-3` (не slate-*)
+- **Обязательные классы текста**: `text-text-1` / `text-text-2` / `text-text-3` (не slate-\*)
 - **Обязательные классы фона**: `bg-bg` / `bg-surface` / `bg-surface-2` (не white/gray)
-- **Обязательные классы акцента**: `bg-primary` / `text-primary` (не indigo-*)
+- **Обязательные классы акцента**: `bg-primary` / `text-primary` (не indigo-\*)
 - **Запрещено** создавать `<button>` / `<input>` / модалы вне `components/ui/`
 - Все loading-состояния: `<Spinner />` из `components/ui/`, никогда текст "Loading..."
 - Время `HH:MM:SS` — всегда через `className="timer-display ..."` (из globals.css)

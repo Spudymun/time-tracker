@@ -91,6 +91,7 @@ flowchart LR
 ### Этап 1: Brainstorm → `spec.md`
 
 Используй ChatGPT/Claude с промптом:
+
 ```
 Ask me one question at a time so we can develop a thorough, step-by-step spec
 for this idea. Our end goal is a detailed specification I can hand off.
@@ -100,6 +101,7 @@ Here's the idea: [ОПИСАНИЕ ИДЕИ]
 ```
 
 После сессии попроси:
+
 ```
 Now compile our findings into a developer-ready specification with all
 requirements, architecture choices, error handling, and testing plan.
@@ -110,6 +112,7 @@ requirements, architecture choices, error handling, and testing plan.
 ### Этап 2: Plan → `prompt_plan.md`
 
 Используй reasoning-модель (o3/Claude) с промптом:
+
 ```
 Draft a step-by-step blueprint for building this project.
 Break into small iterative steps that build on each other.
@@ -154,31 +157,31 @@ flowchart TD
 
 ## Назначение файлов в `.github/`
 
-| Файл/папка | Что делает | Когда применяется |
-|---|---|---|
-| `copilot-instructions.md` | Техстек, структура папок, code guidelines | **Всегда** — загружается автоматически |
-| `instructions/ai-agent-rules.md` | Правила поведения агента (язык, фокус, запреты) | Применяется к `**` |
-| `instructions/typescript.md` | TS strict, без `any`, функциональные компоненты | Применяется к `**/*.ts,tsx` |
-| `instructions/api-routes.md` | Zod перед БД, правильные HTTP коды | Применяется к `app/api/**` |
-| `instructions/prisma.md` | Только через репозитории, singleton клиент | Применяется к `lib/db/**` |
-| `instructions/tests.md` | Vitest паттерны, что и как тестировать | Применяется к `**.test.ts` |
-| `agents/planner.agent.md` | `@planner` — только планирует, не пишет код | Ручной вызов `@planner` |
-| `agents/reviewer.agent.md` | Code review на соответствие spec | Ручной вызов |
-| `prompts/new-feature.prompt.md` | `/new-feature name` — реализовать фичу | Slash command |
-| `prompts/spec-review.prompt.md` | `/spec-review` — сравнить код со spec | Slash command |
-| `prompts/new-component.prompt.md` | `/new-component name` — создать компонент | Slash command |
-| `skills/spec-driven/SKILL.md` | Детальный workflow реализации фичи | Автоматически при "реализуй/добавь" |
-| `skills/db-operations/SKILL.md` | Паттерны репозиториев и Prisma | Автоматически при работе с БД |
+| Файл/папка                        | Что делает                                      | Когда применяется                      |
+| --------------------------------- | ----------------------------------------------- | -------------------------------------- |
+| `copilot-instructions.md`         | Техстек, структура папок, code guidelines       | **Всегда** — загружается автоматически |
+| `instructions/ai-agent-rules.md`  | Правила поведения агента (язык, фокус, запреты) | Применяется к `**`                     |
+| `instructions/typescript.md`      | TS strict, без `any`, функциональные компоненты | Применяется к `**/*.ts,tsx`            |
+| `instructions/api-routes.md`      | Zod перед БД, правильные HTTP коды              | Применяется к `app/api/**`             |
+| `instructions/prisma.md`          | Только через репозитории, singleton клиент      | Применяется к `lib/db/**`              |
+| `instructions/tests.md`           | Vitest паттерны, что и как тестировать          | Применяется к `**.test.ts`             |
+| `agents/planner.agent.md`         | `@planner` — только планирует, не пишет код     | Ручной вызов `@planner`                |
+| `agents/reviewer.agent.md`        | Code review на соответствие spec                | Ручной вызов                           |
+| `prompts/new-feature.prompt.md`   | `/new-feature name` — реализовать фичу          | Slash command                          |
+| `prompts/spec-review.prompt.md`   | `/spec-review` — сравнить код со spec           | Slash command                          |
+| `prompts/new-component.prompt.md` | `/new-component name` — создать компонент       | Slash command                          |
+| `skills/spec-driven/SKILL.md`     | Детальный workflow реализации фичи              | Автоматически при "реализуй/добавь"    |
+| `skills/db-operations/SKILL.md`   | Паттерны репозиториев и Prisma                  | Автоматически при работе с БД          |
 
 ---
 
 ## Три слоя системы
 
-| Слой | Что это | Кто это использует |
-|------|---------|-------------------|
-| **`spec/`** | Контракт: что нужно построить | Ты пишешь, агент читает |
-| **`.github/`** | Инструкции для агента | Copilot читает автоматически |
-| **`mcp/`** | Инструменты агента (сервер) | Copilot вызывает через VS Code |
+| Слой           | Что это                       | Кто это использует             |
+| -------------- | ----------------------------- | ------------------------------ |
+| **`spec/`**    | Контракт: что нужно построить | Ты пишешь, агент читает        |
+| **`.github/`** | Инструкции для агента         | Copilot читает автоматически   |
+| **`mcp/`**     | Инструменты агента (сервер)   | Copilot вызывает через VS Code |
 
 ---
 
@@ -203,6 +206,7 @@ npm run mcp:build
 ```
 
 Затем:
+
 1. Заполни `spec/VISION.md`, `spec/DOMAIN.md`, `spec/BUSINESS_RULES.md`
 2. Создай `spec/FEATURE_name.md` для каждой фичи (из шаблона `FEATURE_template.md`)
 3. Замени `[PROJECT_NAME]` в `.github/copilot-instructions.md`

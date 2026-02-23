@@ -21,14 +21,14 @@
 
 ## Стек аутентификации
 
-| Компонент | Выбор | Обоснование |
-|-----------|-------|-------------|
-| Auth framework | **Auth.js v5** (`next-auth@beta`) | Нативная поддержка Next.js 15 App Router, активная поддержка, официальная документация |
-| Providers | Credentials (email+password) + GitHub OAuth + Google OAuth | Credentials для простоты; GitHub/Google для удобства разработчиков |
-| Session strategy | **JWT** | Отсутствие Session-таблицы в БД, быстрее на serverless (Neon.tech), подходит для personal tool |
-| Password hashing | **bcryptjs** | Стандарт, проверенный, pure JS (работает в Edge) |
-| Prisma adapter | **@auth/prisma-adapter** | Сохраняет User + Account (OAuth linking) в БД |
-| DB tables | User, Account, VerificationToken | Стандарт Auth.js Prisma adapter |
+| Компонент        | Выбор                                                      | Обоснование                                                                                    |
+| ---------------- | ---------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| Auth framework   | **Auth.js v5** (`next-auth@beta`)                          | Нативная поддержка Next.js 15 App Router, активная поддержка, официальная документация         |
+| Providers        | Credentials (email+password) + GitHub OAuth + Google OAuth | Credentials для простоты; GitHub/Google для удобства разработчиков                             |
+| Session strategy | **JWT**                                                    | Отсутствие Session-таблицы в БД, быстрее на serverless (Neon.tech), подходит для personal tool |
+| Password hashing | **bcryptjs**                                               | Стандарт, проверенный, pure JS (работает в Edge)                                               |
+| Prisma adapter   | **@auth/prisma-adapter**                                   | Сохраняет User + Account (OAuth linking) в БД                                                  |
+| DB tables        | User, Account, VerificationToken                           | Стандарт Auth.js Prisma adapter                                                                |
 
 ---
 
@@ -76,9 +76,9 @@
 
 ### Страницы (app/(auth)/)
 
-| Маршрут | Компонент | Описание |
-|---------|-----------|---------|
-| `/login` | `LoginPage` + `LoginForm` | Email/password + OAuth кнопки |
+| Маршрут     | Компонент                       | Описание                          |
+| ----------- | ------------------------------- | --------------------------------- |
+| `/login`    | `LoginPage` + `LoginForm`       | Email/password + OAuth кнопки     |
 | `/register` | `RegisterPage` + `RegisterForm` | Email + name + password + confirm |
 
 Эти страницы в отдельной route group `(auth)` — без TimerBar в layout.  
@@ -86,12 +86,12 @@
 
 ### UI компоненты
 
-| Компонент | Описание |
-|-----------|---------|
-| `LoginForm.tsx` | React Hook Form + Zod; показывает `signIn` error toast |
-| `RegisterForm.tsx` | React Hook Form + Zod; POST `/api/auth/register` |
-| `OAuthButton.tsx` | Кнопка с иконкой провайдера (GitHub, Google), loading state |
-| `UserMenu.tsx` | В хедере: аватар/инициалы, имя, email, «Sign out» дропдаун |
+| Компонент          | Описание                                                    |
+| ------------------ | ----------------------------------------------------------- |
+| `LoginForm.tsx`    | React Hook Form + Zod; показывает `signIn` error toast      |
+| `RegisterForm.tsx` | React Hook Form + Zod; POST `/api/auth/register`            |
+| `OAuthButton.tsx`  | Кнопка с иконкой провайдера (GitHub, Google), loading state |
+| `UserMenu.tsx`     | В хедере: аватар/инициалы, имя, email, «Sign out» дропдаун  |
 
 ---
 
@@ -99,14 +99,15 @@
 
 ### Новые эндпоинты
 
-| Method | Route | Описание |
-|--------|-------|---------|
-| POST | `/api/auth/register` | Регистрация: `{ name, email, password }` → создаёт User с bcrypt hash |
-| `*` | `/api/auth/[...nextauth]` | Auth.js handler — всё остальное (login, OAuth callback, signout) |
+| Method | Route                     | Описание                                                              |
+| ------ | ------------------------- | --------------------------------------------------------------------- |
+| POST   | `/api/auth/register`      | Регистрация: `{ name, email, password }` → создаёт User с bcrypt hash |
+| `*`    | `/api/auth/[...nextauth]` | Auth.js handler — всё остальное (login, OAuth callback, signout)      |
 
 ### Изменение существующих
 
 Все API routes (`/api/projects`, `/api/tags`, `/api/time-entries`, etc.) теперь:
+
 1. Извлекают `userId` из сессии: `const session = await auth(); if (!session) return 401`
 2. Передают `userId` во все вызовы репозиториев
 
@@ -114,9 +115,9 @@
 
 ```typescript
 {
-  name: string;      // 1-50 символов
-  email: string;     // valid email, lowercase
-  password: string;  // min 8 символов, max 72 (bcrypt limit)
+  name: string; // 1-50 символов
+  email: string; // valid email, lowercase
+  password: string; // min 8 символов, max 72 (bcrypt limit)
 }
 ```
 
@@ -135,6 +136,7 @@
 ```
 
 Логика:
+
 - Если нет сессии AND маршрут не публичный → `redirect('/login?callbackUrl=...')`
 - Если есть сессия AND маршрут `/login` или `/register` → `redirect('/')`
 - API routes без сессии → `{ error: 'Unauthorized' }` с `status: 401`
@@ -184,6 +186,7 @@ User ──< TimeEntry    (one-to-many)
 ```
 
 **Последствия:**
+
 - `Project.name` уникально **per-user** (не глобально) → Prisma constraint: `@@unique([userId, name])`
 - `Tag.name` уникально **per-user** → `@@unique([userId, name])`
 - "Одна активная запись" — per-user, не глобально
@@ -200,16 +203,16 @@ User ──< TimeEntry    (one-to-many)
 
 ## Edge Cases
 
-| Случай | Поведение |
-|--------|-----------|
-| Неверный пароль | Credentials error → `"Invalid credentials"` toast, нет 404/200 leak |
-| Email занят при регистрации | 409 → `"Email already in use"` |
-| OAuth email совпадает с Credentials email | Auth.js OAuthAccountNotLinked error → `/login?error=OAuthAccountNotLinked` → показать `"Войдите с email/паролем для этого аккаунта"` |
-| JWT истёк (навигация) | Middleware обнаружит отсутствие сессии → редирект `/login?callbackUrl=...` |
+| Случай                                                       | Поведение                                                                                                                                                                |
+| ------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Неверный пароль                                              | Credentials error → `"Invalid credentials"` toast, нет 404/200 leak                                                                                                      |
+| Email занят при регистрации                                  | 409 → `"Email already in use"`                                                                                                                                           |
+| OAuth email совпадает с Credentials email                    | Auth.js OAuthAccountNotLinked error → `/login?error=OAuthAccountNotLinked` → показать `"Войдите с email/паролем для этого аккаунта"`                                     |
+| JWT истёк (навигация)                                        | Middleware обнаружит отсутствие сессии → редирект `/login?callbackUrl=...`                                                                                               |
 | JWT истёк (пользователь на странице, fetch() возвращает 401) | Zustand store получает 401 → `toast.error("Session expired. Please sign in.")` + `window.location.href = '/login'`. Реализуется через `lib/utils/api-client.ts#apiFetch` |
-| Пользователь удалён во время активной сессии | JWT всё ещё валиден до истечения; при DELETE репозиторий выбросит FK violation → 401 |
-| Попытка доступа к чужому ресурсу (PUT /api/projects/[id]) | Repository фильтрует по userId → 404 (не 403, чтобы не раскрывать наличие записи) |
-| Пустой email у OAuth provider | Auth.js обработает, email nullable в User — допустимо |
+| Пользователь удалён во время активной сессии                 | JWT всё ещё валиден до истечения; при DELETE репозиторий выбросит FK violation → 401                                                                                     |
+| Попытка доступа к чужому ресурсу (PUT /api/projects/[id])    | Repository фильтрует по userId → 404 (не 403, чтобы не раскрывать наличие записи)                                                                                        |
+| Пустой email у OAuth provider                                | Auth.js обработает, email nullable в User — допустимо                                                                                                                    |
 
 ---
 
@@ -238,13 +241,13 @@ AUTH_GOOGLE_CLIENT_SECRET=your-google-client-secret
 
 ## Тестовый план
 
-| Сценарий | Тип | Описание |
-|----------|-----|---------|
-| RegisterSchema | Unit | name/email/password валидация |
-| Неверный пароль | Unit | `validateUser()` возвращает null |
-| Правильный пароль | Unit | `validateUser()` возвращает User |
-| bcrypt hash не совпадает | Unit | `compare()` = false |
-| Email uniqueness | Integration | 409 при дублировании |
-| Unauthorised API | Manual | `/api/projects` без сессии → 401 |
-| Middleware redirect | Manual | `/projects` без сессии → `/login?callbackUrl=...` |
-| OAuth happy path | Manual | GitHub → создание User + Account |
+| Сценарий                 | Тип         | Описание                                          |
+| ------------------------ | ----------- | ------------------------------------------------- |
+| RegisterSchema           | Unit        | name/email/password валидация                     |
+| Неверный пароль          | Unit        | `validateUser()` возвращает null                  |
+| Правильный пароль        | Unit        | `validateUser()` возвращает User                  |
+| bcrypt hash не совпадает | Unit        | `compare()` = false                               |
+| Email uniqueness         | Integration | 409 при дублировании                              |
+| Unauthorised API         | Manual      | `/api/projects` без сессии → 401                  |
+| Middleware redirect      | Manual      | `/projects` без сессии → `/login?callbackUrl=...` |
+| OAuth happy path         | Manual      | GitHub → создание User + Account                  |

@@ -59,24 +59,25 @@
 - `weeklyTargetHours` в localStorage не найден (очищен) → обрабатывать как `null` (нет цели), `WeeklyTargetBar` скрыт
 - Навигация на будущую неделю: стрелка «›» заблокирована, нельзя навигировать вперёд текущей недели
 - SSR / localStorage: `WeeklyTargetBar` использует `"use client"` и читает localStorage только после монтирования (useEffect), чтобы избежать hydration mismatch
+
 ## API
 
-| Метод | Endpoint | Описание |
-|-------|----------|---------|
-| GET | /api/dashboard?from=&to= | Данные для дашборда |
+| Метод | Endpoint                 | Описание            |
+| ----- | ------------------------ | ------------------- |
+| GET   | /api/dashboard?from=&to= | Данные для дашборда |
 
 ### Response Schema
 
 ```typescript
 {
-  from: string;        // ISO date (понедельник)
-  to: string;          // ISO date (воскресенье)
+  from: string; // ISO date (понедельник)
+  to: string; // ISO date (воскресенье)
   totalSeconds: number;
   billableSeconds: number;
-  totalEarnings: number | null;  // сумма заработка по проектам со ставкой
+  totalEarnings: number | null; // сумма заработка по проектам со ставкой
   byDay: Array<{
-    date: string;      // ISO date
-    dayLabel: string;  // «Mon», «Tue»...
+    date: string; // ISO date
+    dayLabel: string; // «Mon», «Tue»...
     totalSeconds: number;
     byProject: Array<{
       projectId: string | null;

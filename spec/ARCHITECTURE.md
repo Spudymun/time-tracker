@@ -13,7 +13,7 @@
 | State      | Zustand                | 5.x    | Minimal boilerplate                  |
 | ORM        | Prisma v7 + PG adapter | 7.x    | Type-safe queries, schema migrations |
 | Auth       | Auth.js v5 (next-auth) | 5.x    | Native Next.js 15 App Router support |
-| Auth DB    | @auth/prisma-adapter   | latest | User + Account таблицы через Prisma    |
+| Auth DB    | @auth/prisma-adapter   | latest | User + Account таблицы через Prisma  |
 | Passwords  | bcryptjs               | 3.x    | Pure JS, Edge-compatible             |
 | Forms      | react-hook-form        | 7.x    | Controlled forms, Zod resolver       |
 | Validation | Zod                    | 4.x    | Runtime + compile-time validation    |
@@ -124,14 +124,14 @@ API-маршруты без сессии: `401 Unauthorized` (не редире�
 
 ## Решения и компромиссы
 
-| Решение                     | Альтернатива        | Почему выбрали                                  |
-| --------------------------- | ------------------- | ----------------------------------------------- |
-| Prisma adapter-pg           | Стандартный Prisma  | Edge runtime совместимость                      |
-| Auth.js v5 JWT strategy     | Iron Session / Custom | Стандарт для Next.js 15, OAuth out of the box |
-| TailwindCSS v4              | CSS Modules         | Нет конфига, встроен в CSS                      |
-| Vitest без RTL              | Jest + RTL          | Быстрее, ESM-native, достаточно для unit-тестов |
-| Recharts                    | Chart.js / D3       | React-native, легкая интеграция, достаточно для bar chart |
-| No next.config.ts изменений | Кастомные настройки | YAGNI — добавлять по мере необходимости |
+| Решение                     | Альтернатива          | Почему выбрали                                            |
+| --------------------------- | --------------------- | --------------------------------------------------------- |
+| Prisma adapter-pg           | Стандартный Prisma    | Edge runtime совместимость                                |
+| Auth.js v5 JWT strategy     | Iron Session / Custom | Стандарт для Next.js 15, OAuth out of the box             |
+| TailwindCSS v4              | CSS Modules           | Нет конфига, встроен в CSS                                |
+| Vitest без RTL              | Jest + RTL            | Быстрее, ESM-native, достаточно для unit-тестов           |
+| Recharts                    | Chart.js / D3         | React-native, легкая интеграция, достаточно для bar chart |
+| No next.config.ts изменений | Кастомные настройки   | YAGNI — добавлять по мере необходимости                   |
 
 ## Структура папок (детальная)
 

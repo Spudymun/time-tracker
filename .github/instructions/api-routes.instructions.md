@@ -24,7 +24,7 @@ export async function POST(request: NextRequest): Promise<Response> {
     // flatten() вместо format() — структурированные ошибки по полям
     return Response.json(
       { error: "Validation failed", details: result.error.flatten().fieldErrors },
-      { status: 400 },
+      { status: 400 }
     );
   }
 
@@ -69,10 +69,7 @@ export async function POST(request: NextRequest): Promise<Response> {
 
 ```ts
 // app/api/projects/[id]/route.ts
-export async function GET(
-  request: Request,
-  { params }: { params: Promise<{ id: string }> },
-) {
+export async function GET(request: Request, { params }: { params: Promise<{ id: string }> }) {
   const { id } = await params; // Next.js 15: params — Promise
   // ...
 }
@@ -97,16 +94,16 @@ const parsed = DateSchema.safeParse(date ?? undefined);
 
 ```ts
 // ❌ Zod v3 (deprecated)
-z.string().email()
-z.string().url()
-z.string().uuid()
-z.string().min(1, { message: "Required" })
+z.string().email();
+z.string().url();
+z.string().uuid();
+z.string().min(1, { message: "Required" });
 
 // ✅ Zod v4
-z.email()              // top-level форматы
-z.url()
-z.uuidv4()
-z.string().min(1, { error: "Required" })  // единый параметр error
+z.email(); // top-level форматы
+z.url();
+z.uuidv4();
+z.string().min(1, { error: "Required" }); // единый параметр error
 
 // coerce — только для внешних данных (query params, form data)
 const pageSchema = z.coerce.number().int().min(1).default(1); // "2" → 2

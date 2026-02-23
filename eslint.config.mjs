@@ -23,10 +23,7 @@ const eslintConfig = [
         "error",
         { argsIgnorePattern: "^_", varsIgnorePattern: "^_" },
       ],
-      "@typescript-eslint/consistent-type-imports": [
-        "warn",
-        { prefer: "type-imports" },
-      ],
+      "@typescript-eslint/consistent-type-imports": ["warn", { prefer: "type-imports" }],
       "@typescript-eslint/no-non-null-assertion": "warn",
 
       // React

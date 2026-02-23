@@ -1,7 +1,7 @@
 # prompt_plan.md — Time Tracker
 
 > Сгенерирован: 2026-02-22
-> Основан на: spec.md + spec/FEATURE_*.md
+> Основан на: spec.md + spec/FEATURE\_\*.md
 > Инструмент: GitHub Copilot Agent Mode
 
 ---
@@ -690,10 +690,10 @@ Create app/(auth)/layout.tsx:
   - Logo / app name centered at top
   - Full-height centered card
 
-Create components/auth/:  
+Create components/auth/:
   OAuthButton.tsx — button with provider icon (GitHub/Google), loading state
     Props: provider: 'github' | 'google', onClick: () => void, isLoading: boolean
-  
+
   LoginForm.tsx — "use client"
     - Fields: email, password
     - Submit: signIn('credentials', { email, password, callbackUrl: searchParams.get('callbackUrl') || '/' })
@@ -701,7 +701,7 @@ Create components/auth/:
     - GitHub OAuth button → signIn('github')
     - Google OAuth button → signIn('google')
     - Link to /register
-  
+
   RegisterForm.tsx — "use client"
     - Fields: name, email, password, confirmPassword
     - Submit: POST /api/auth/register → on success signIn('credentials', ...)
@@ -753,7 +753,7 @@ Create system Next.js pages and loading states:
    app/loading.tsx
    - Full-screen centered <Spinner size="lg" />
 
-   app/(main)/loading.tsx  
+   app/(main)/loading.tsx
    - Skeleton: gray DashboardWidget placeholder (h-[280px] animate-pulse rounded-lg)
    - 3 skeleton entry rows
 

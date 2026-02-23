@@ -103,7 +103,7 @@ export function ConfirmDialog({ ... }: ConfirmDialogProps) { ... }
 
 ```tsx
 // ✅ Сокращённая запись для true
-<Button disabled />   // то же что disabled={true}
+<Button disabled />; // то же что disabled={true}
 
 // Булевы пропсы — префиксы: is, has, can, should
 interface Props {

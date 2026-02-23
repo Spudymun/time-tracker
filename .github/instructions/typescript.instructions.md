@@ -35,8 +35,13 @@ interface ProjectWithDates extends WithTimestamps {
 }
 
 // ❌ Неправильно: interface для рядовых типов
-interface User { id: string; name: string; } // повторное объявление — молчаливый merge!
-interface User { age: number; }              // ← не ошибка в TS, но баг на практике
+interface User {
+  id: string;
+  name: string;
+} // повторное объявление — молчаливый merge!
+interface User {
+  age: number;
+} // ← не ошибка в TS, но баг на практике
 ```
 
 ### Discriminated unions вместо optional флагов
@@ -64,7 +69,11 @@ type AsyncState<T> =
 
 ```ts
 // ❌ Плохо
-try { doSomething(); } catch (e: any) { console.error(e.message); }
+try {
+  doSomething();
+} catch (e: any) {
+  console.error(e.message);
+}
 
 // ✅ Хорошо
 try {
@@ -119,18 +128,13 @@ import { useState, useCallback } from "react";
 // 2. Type для props (НЕ interface, если нет extends)
 type ButtonProps = {
   label: string;
-  onClick: () => void;         // ← prop: on* (контракт компонента)
+  onClick: () => void; // ← prop: on* (контракт компонента)
   disabled?: boolean;
   variant?: "primary" | "secondary";
 };
 
 // 3. Компонент — именованный export, НЕ React.FC (устарел в React 18+)
-export function Button({
-  label,
-  onClick,
-  disabled = false,
-  variant = "primary",
-}: ButtonProps) {
+export function Button({ label, onClick, disabled = false, variant = "primary" }: ButtonProps) {
   // 4. Hooks — только вверху
   const [isLoading, setIsLoading] = useState(false);
 
@@ -159,14 +163,16 @@ export function Button({
 const Button: React.FC<{ label: string }> = ({ label }) => <button>{label}</button>;
 
 // ✅ Правильно: явная функция
-function Button({ label }: { label: string }) { return <button>{label}</button>; }
+function Button({ label }: { label: string }) {
+  return <button>{label}</button>;
+}
 ```
 
 ### Именование: on* vs handle*
 
-| Контекст | Конвенция | Пример |
-|---|---|---|
-| Props (контракт) | `on` + PascalCase | `onDelete`, `onFilterChange` |
+| Контекст          | Конвенция             | Пример                               |
+| ----------------- | --------------------- | ------------------------------------ |
+| Props (контракт)  | `on` + PascalCase     | `onDelete`, `onFilterChange`         |
 | Обработчик внутри | `handle` + PascalCase | `handleDelete`, `handleFilterChange` |
 
 ```tsx

@@ -9,6 +9,7 @@
 ## Принцип
 
 Каждый экран, список и модал должен корректно отображаться в трёх состояниях:
+
 1. **Loading** — данные загружаются
 2. **Empty** — данные загружены, но список пуст
 3. **Error** — запрос завершился ошибкой
@@ -63,6 +64,7 @@
 ### `app/(main)/loading.tsx`
 
 Показывается при навигации на главную. Skeleton layout:
+
 - Placeholder для DashboardWidget (высота ~280px, `animate-skeleton bg-surface-2 rounded-lg`)
 - 3 placeholder-строки для EntriesList
 
@@ -92,6 +94,7 @@ Centered `<Spinner size="md" />`.
 ```
 
 Если активны фильтры:
+
 ```
 [Иконка поиска]
 "No entries match your filters"
@@ -146,6 +149,7 @@ Dropdown не показывается. Пользователь продолж�
 ### Глобальная обработка 401 (истёкшая сессия)
 
 Если любой `fetch()` в Zustand store возвращает `401`:
+
 - Показать toast.error: `"Session expired. Please sign in again."`
 - Сделать `window.location.href = '/login'` (не `router.push`, чтобы очистить state)
 
@@ -156,8 +160,8 @@ async function apiFetch(url: string, options?: RequestInit): Promise<Response> {
   const res = await fetch(url, options);
   if (res.status === 401) {
     // уведомить и редиректить
-    window.location.href = '/login';
-    throw new Error('Unauthorized');
+    window.location.href = "/login";
+    throw new Error("Unauthorized");
   }
   return res;
 }
@@ -176,7 +180,7 @@ async function apiFetch(url: string, options?: RequestInit): Promise<Response> {
 ### Ошибка загрузки Dashboard
 
 ```
-[Иконка AlertCircle]  
+[Иконка AlertCircle]
 "Failed to load dashboard data"
 [Кнопка "Retry"]
 ```
@@ -200,26 +204,26 @@ ExportButton возвращается в нормальное состояние
 
 ## Состояния кнопок и форм
 
-| Состояние | Поведение |
-|-----------|----------|
-| Form submitting | Кнопка Submit заменяет текст на `<Spinner size="sm" />`, disabled |
-| Form error (сервер) | Toast с текстом ошибки, форма остаётся открытой |
-| Form error (валидация) | Inline red text под полем, без toast |
-| Delete confirmation | Inline inline "Are you sure? [Delete] [Cancel]" — без modal для простых удалений |
-| Complex delete (с предупреждением) | Modal с деталями (пример: удаление проекта с записями) |
+| Состояние                          | Поведение                                                                        |
+| ---------------------------------- | -------------------------------------------------------------------------------- |
+| Form submitting                    | Кнопка Submit заменяет текст на `<Spinner size="sm" />`, disabled                |
+| Form error (сервер)                | Toast с текстом ошибки, форма остаётся открытой                                  |
+| Form error (валидация)             | Inline red text под полем, без toast                                             |
+| Delete confirmation                | Inline inline "Are you sure? [Delete] [Cancel]" — без modal для простых удалений |
+| Complex delete (с предупреждением) | Modal с деталями (пример: удаление проекта с записями)                           |
 
 ---
 
 ## Анимации и transitions
 
-| Элемент | Transition |
-|---------|-----------|
-| Dropdown открытие | `transition-opacity duration-150` |
-| EntryItem (удаление из списка) | `transition-all duration-200 opacity-0 scale-95` |
-| Toast появление | slide-in снизу-справа |
-| Modal открытие | `transition-opacity duration-200` backdrop + `transition-transform duration-200 scale-100` |
-| TimerDisplay тик | Без анимации (просто счётчик) |
-| DashboardCompact появление | `transition-transform duration-300 translate-y-0` |
+| Элемент                        | Transition                                                                                 |
+| ------------------------------ | ------------------------------------------------------------------------------------------ |
+| Dropdown открытие              | `transition-opacity duration-150`                                                          |
+| EntryItem (удаление из списка) | `transition-all duration-200 opacity-0 scale-95`                                           |
+| Toast появление                | slide-in снизу-справа                                                                      |
+| Modal открытие                 | `transition-opacity duration-200` backdrop + `transition-transform duration-200 scale-100` |
+| TimerDisplay тик               | Без анимации (просто счётчик)                                                              |
+| DashboardCompact появление     | `transition-transform duration-300 translate-y-0`                                          |
 
 ---
 

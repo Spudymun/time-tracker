@@ -41,7 +41,7 @@ export interface ReportResult {
 export function buildReport(
   entries: TimeEntry[],
   projects: Project[],
-  periodDays: number,
+  periodDays: number
 ): ReportResult {
   // Создай Map для быстрого поиска проекта по id
   const projectMap = new Map(projects.map((p) => [p.id, p]));
@@ -86,7 +86,7 @@ function formatDuration(seconds: number): string {
 // ❌ Плохо: side effect в сервисе
 function processEntry(entry: TimeEntry): void {
   console.log(entry); // side effect
-  db.save(entry);     // DB доступ — это работа репозитория, не сервиса
+  db.save(entry); // DB доступ — это работа репозитория, не сервиса
 }
 ```
 
@@ -97,7 +97,10 @@ function processEntry(entry: TimeEntry): void {
 // HTTP коды — ответственность API route
 
 export class ReportError extends Error {
-  constructor(message: string, public readonly code: "INVALID_PERIOD" | "NO_DATA") {
+  constructor(
+    message: string,
+    public readonly code: "INVALID_PERIOD" | "NO_DATA"
+  ) {
     super(message);
     this.name = "ReportError";
   }

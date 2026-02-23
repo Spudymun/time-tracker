@@ -78,32 +78,32 @@ className="text-slate-700"    // → text-text-2
 
 ```tsx
 // Основной акцент
-className="bg-primary text-primary-fg hover:bg-primary-hover"
+className = "bg-primary text-primary-fg hover:bg-primary-hover";
 
 // Фоны
-className="bg-bg"           // страница
-className="bg-surface"      // карточки
-className="bg-surface-2"    // hover, вложенные блоки
-className="bg-primary-light" // лёгкий indigo tint
+className = "bg-bg"; // страница
+className = "bg-surface"; // карточки
+className = "bg-surface-2"; // hover, вложенные блоки
+className = "bg-primary-light"; // лёгкий indigo tint
 
 // Текст
-className="text-text-1"     // основной
-className="text-text-2"     // вторичный
-className="text-text-3"     // muted, placeholder
+className = "text-text-1"; // основной
+className = "text-text-2"; // вторичный
+className = "text-text-3"; // muted, placeholder
 
 // Borders
-className="border-border"
-className="border-border-subtle"
+className = "border-border";
+className = "border-border-subtle";
 
 // Semantic
-className="text-success bg-success-bg"
-className="text-error bg-error-bg"
-className="text-warning bg-warning-bg"
-className="text-info bg-info-bg"
+className = "text-success bg-success-bg";
+className = "text-error bg-error-bg";
+className = "text-warning bg-warning-bg";
+className = "text-info bg-info-bg";
 
 // Таймер
-className="text-timer-active"   // зелёная точка
-className="bg-timer-pulse animate-timer-pulse"   // pulse ring
+className = "text-timer-active"; // зелёная точка
+className = "bg-timer-pulse animate-timer-pulse"; // pulse ring
 ```
 
 ### Компоненты
@@ -135,41 +135,41 @@ import { ColorPicker } from "@/components/ui/color-picker";
 
 ```tsx
 // ✅ Правильно — используй стандартные Tailwind spacing единицы
-className="p-4"          // 16px padding карточки
-className="p-6"          // 24px padding большой карточки  
-className="gap-3"        // 12px gap в flexbox/grid
-className="space-y-6"    // 24px вертикальный ритм между секциями
-className="px-3 py-2"   // nav items, compact elements
-className="py-3 px-4"   // строки таблицы
+className = "p-4"; // 16px padding карточки
+className = "p-6"; // 24px padding большой карточки
+className = "gap-3"; // 12px gap в flexbox/grid
+className = "space-y-6"; // 24px вертикальный ритм между секциями
+className = "px-3 py-2"; // nav items, compact elements
+className = "py-3 px-4"; // строки таблицы
 
 // ❌ Запрещены произвольные значения без крайней необходимости
-className="p-[13px]"    // избегать
-className="gap-[7px]"   // избегать
+className = "p-[13px]"; // избегать
+className = "gap-[7px]"; // избегать
 ```
 
 ### Border Radius
 
 ```tsx
 // ✅ Правильно — по контексту
-className="rounded-sm"    // 4px — badges, tags
-className="rounded-md"    // 8px — inputs, кнопки
-className="rounded-lg"    // 12px — карточки, panels
-className="rounded-xl"    // 16px — модальные окна
-className="rounded-full"  // pill — badges статуса, кнопка таймера
+className = "rounded-sm"; // 4px — badges, tags
+className = "rounded-md"; // 8px — inputs, кнопки
+className = "rounded-lg"; // 12px — карточки, panels
+className = "rounded-xl"; // 16px — модальные окна
+className = "rounded-full"; // pill — badges статуса, кнопка таймера
 ```
 
 ### Shadows
 
 ```tsx
 // ✅ Через токены
-className="shadow-sm"     // карточки по умолчанию
-className="shadow-md"     // hover, dropdowns
-className="shadow-lg"     // popovers
-className="shadow-modal"  // модальные окна
+className = "shadow-sm"; // карточки по умолчанию
+className = "shadow-md"; // hover, dropdowns
+className = "shadow-lg"; // popovers
+className = "shadow-modal"; // модальные окна
 
 // ❌ Запрещено
-className="shadow-slate-200"   // кастомный shadow color
-className="shadow-[0_4px_8px_rgba(0,0,0,0.1)]"  // за пределами токенов
+className = "shadow-slate-200"; // кастомный shadow color
+className = "shadow-[0_4px_8px_rgba(0,0,0,0.1)]"; // за пределами токенов
 ```
 
 ### Интерактивность (ОБЯЗАТЕЛЬНО для каждого интерактивного элемента)
@@ -189,15 +189,15 @@ className={cn(
 
 ## Типографика — быстрая справка
 
-| Контекст | Обязательные классы |
-|----------|-------------------|
+| Контекст              | Обязательные классы                                 |
+| --------------------- | --------------------------------------------------- |
 | Заголовок страницы h1 | `text-2xl font-semibold text-text-1 tracking-tight` |
-| Заголовок секции h2 | `text-lg font-medium text-text-1` |
-| Метка поля | `text-sm font-medium text-text-2` |
-| Обычный текст | `text-sm text-text-1` |
-| Дополнительный текст | `text-sm text-text-3` |
-| **Дисплей таймера** | `timer-display text-4xl font-bold text-text-1` |
-| Компактный таймер | `timer-display text-xl font-semibold text-text-1` |
+| Заголовок секции h2   | `text-lg font-medium text-text-1`                   |
+| Метка поля            | `text-sm font-medium text-text-2`                   |
+| Обычный текст         | `text-sm text-text-1`                               |
+| Дополнительный текст  | `text-sm text-text-3`                               |
+| **Дисплей таймера**   | `timer-display text-4xl font-bold text-text-1`      |
+| Компактный таймер     | `timer-display text-xl font-semibold text-text-1`   |
 
 > `timer-display` — обязательный класс для ЛЮБОГО отображения времени `HH:MM:SS`.
 
@@ -207,13 +207,13 @@ className={cn(
 
 ```tsx
 // ✅ Использовать из globals.css
-className="animate-timer-pulse"   // пульс зелёной точки
-className="animate-entry-in"      // появление новой записи
-className="animate-modal-in"      // открытие модала
-className="animate-toast-in"      // появление toast
-className="animate-skeleton"      // skeleton placeholder
+className = "animate-timer-pulse"; // пульс зелёной точки
+className = "animate-entry-in"; // появление новой записи
+className = "animate-modal-in"; // открытие модала
+className = "animate-toast-in"; // появление toast
+className = "animate-skeleton"; // skeleton placeholder
 
-// ❌ Запрещено создавать кастомные keyframes в компонентах — 
+// ❌ Запрещено создавать кастомные keyframes в компонентах —
 //   добавлять в globals.css если нужна новая анимация
 ```
 
@@ -252,13 +252,13 @@ className="animate-skeleton"      // skeleton placeholder
 ### EntryItem
 
 ```tsx
-<div className="flex items-center gap-3 py-3 px-4 hover:bg-surface-2 transition-colors duration-[150ms] border-b border-border-subtle">
+<div className="flex items-center gap-3 border-b border-border-subtle px-4 py-3 transition-colors duration-[150ms] hover:bg-surface-2">
   <div
-    className="w-2.5 h-2.5 rounded-full shrink-0"
-    style={{ backgroundColor: entry.project?.color ?? 'var(--color-no-project)' }}
+    className="h-2.5 w-2.5 shrink-0 rounded-full"
+    style={{ backgroundColor: entry.project?.color ?? "var(--color-no-project)" }}
   />
-  <span className="text-sm text-text-1 text-truncate flex-1">{entry.taskName}</span>
-  <span className="timer-display text-sm font-medium text-text-2 shrink-0">
+  <span className="text-truncate flex-1 text-sm text-text-1">{entry.taskName}</span>
+  <span className="timer-display shrink-0 text-sm font-medium text-text-2">
     {formatDuration(entry.durationSeconds)}
   </span>
 </div>
@@ -268,8 +268,8 @@ className="animate-skeleton"      // skeleton placeholder
 
 ```tsx
 <div className="relative flex items-center">
-  <div className="absolute w-3 h-3 rounded-full bg-timer-pulse animate-timer-pulse" />
-  <div className="w-3 h-3 rounded-full bg-timer-active relative" />
+  <div className="animate-timer-pulse absolute h-3 w-3 rounded-full bg-timer-pulse" />
+  <div className="relative h-3 w-3 rounded-full bg-timer-active" />
 </div>
 ```
 
