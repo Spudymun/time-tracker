@@ -522,3 +522,43 @@ DashboardWidget.tsx — fetches /api/dashboard, navigation ‹ ›, link to repo
 
 Connect to app/(main)/page.tsx above EntriesList
 ```
+
+---
+
+## Промпт 10: UI — Projects Page
+
+```
+Read #file:spec/FEATURE_projects.md
+
+Create components/projects/:
+
+ColorPicker.tsx — grid of 12 preset colors + custom HEX input field
+  Validates /^#[0-9A-Fa-f]{6}$/ on blur
+
+ProjectEstimateBar.tsx — progress bar for time budget
+  Props: estimateProgress (number | null)
+  Hidden if estimateProgress is null
+  Colors: green (0–0.79), yellow (0.80–0.99), red (≥1.0)
+  Shows label: "Xh / Yh (ZZ%)"
+
+ProjectForm.tsx — compact inline form:
+  - name input + ColorPicker + Save/Cancel buttons
+  - optional estimatedHours input (number, > 0)
+  - optional hourlyRate input (number, >= 0)
+
+ProjectDeleteConfirm.tsx — modal or inline confirm with warning about
+  unassigned entries count
+
+ProjectItem.tsx — display: [color dot] [name] [Xh total] [billable Xh]
+                            [ProjectEstimateBar if estimate set]
+                            [earnings if hourlyRate set] [entry count]
+                            [Archive/Unarchive btn] [Edit] [Delete]
+               edit: inline ProjectForm
+               archived projects: shown with (archived) label, muted style
+
+ProjectsList.tsx — renders active projects by default
+  "New project" button at top
+  Toggle "Show archived" — re-fetches with ?archived=true, appended at bottom
+
+Create app/projects/page.tsx — server component fetching projects
+```

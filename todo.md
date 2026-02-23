@@ -150,12 +150,12 @@
 
 ## UI — Projects (FEATURE_projects.md)
 
-- [ ] ColorPicker.tsx (swatches + HEX input)
-- [ ] ProjectEstimateBar.tsx (прогресс-бар бюджета, цвета по порогам)
-- [ ] ProjectForm.tsx (инлайн создание + поля estimate + hourlyRate)
-- [ ] ProjectItem.tsx (display + edit + Archive/Unarchive + earnings + estimate bar)
-- [ ] ProjectsList.tsx (тоггл "Показать архивные")
-- [ ] Создать страницу /projects
+- [x] ColorPicker.tsx (swatches + HEX input)
+- [x] ProjectEstimateBar.tsx (прогресс-бар бюджета, цвета по порогам)
+- [x] ProjectForm.tsx (инлайн создание + поля estimate + hourlyRate)
+- [x] ProjectItem.tsx (display + edit + Archive/Unarchive + earnings + estimate bar)
+- [x] ProjectsList.tsx (тоггл "Показать архивные")
+- [x] Создать страницу /projects
 
 ## UI — Tags (FEATURE_tags.md)
 
