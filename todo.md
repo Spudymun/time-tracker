@@ -37,7 +37,7 @@
 - [x] Добавить ToastProvider в app/layout.tsx
 - [x] Создать components/ui/Badge.tsx (variant: default|archived|billable)
 - [x] Создать components/ui/TagChip.tsx (color, name, onRemove?)
-- [ ] Создать components/ui/Select.tsx (базовый select)
+- [x] Создать components/ui/Select.tsx (базовый select, forwardRef, label, error, placeholder)
 - [x] Создать lib/utils/api-client.ts (apiFetch с 401 interceptor → redirect /login)
 - [ ] Обновить stores (заменить fetch на apiFetch в timer-store.ts и entries-store.ts)
 

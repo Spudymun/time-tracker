@@ -633,3 +633,31 @@ Update app/layout.tsx:
 
 Ensure all pages have consistent layout padding below header
 ```
+
+---
+
+## Промпт 14: UI общие компоненты (components/ui/)
+
+```
+> NOTE: Button, Input, Modal, Toast, Badge, Spinner, TagChip уже созданы в Промпте 6а.
+> В этом промпте: проверить и дополнить если что-то пропущено.
+
+Read #file:spec/DESIGN_SYSTEM.md
+
+Verify all components/ui/ are complete:
+- Spinner.tsx — sizes sm|md|lg
+- Button.tsx — variants + loading + disabled states
+- Input.tsx — label + error + forward ref
+- Modal.tsx — portal + Escape + backdrop click + scroll lock + aria
+- Toast.tsx + useToast hook — success/error/info, auto-dismiss 3s/5s
+- Badge.tsx — variant: default|archived|billable
+- TagChip.tsx — color + name + optional onRemove
+- Select.tsx — customizable base select
+
+Verify lib/utils/api-client.ts exists with 401 interceptor.
+
+If any component is missing or incomplete — implement it now.
+All components: typed props, no `any`, forward refs where needed.
+
+Follow #file:spec/DESIGN_SYSTEM.md
+```
