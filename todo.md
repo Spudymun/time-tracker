@@ -116,7 +116,7 @@
 
 ## UI — Timer (FEATURE_timer.md)
 
-- [ ] Создать lib/stores/timer-store.ts
+- [x] Создать lib/stores/timer-store.ts
 - [ ] TimerDisplay.tsx (тикающий счётчик hh:mm:ss)
 - [ ] TaskAutocomplete.tsx (поле с dropdown)
 - [ ] ProjectSelect.tsx (dropdown проектов)
@@ -128,7 +128,7 @@
 
 ## UI — Entries List (FEATURE_entries.md)
 
-- [ ] Создать lib/stores/entries-store.ts (добавить поддержку фильтров: projectId, tagId, billable, q)
+- [x] Создать lib/stores/entries-store.ts (добавить поддержку фильтров: projectId, tagId, billable, q)
 - [ ] EntriesFilterBar.tsx (поиск, выбор проекта/тега, billable, кнопка Clear)
 - [ ] EntryItem.tsx (display + edit mode + отображение archived проекта)
 - [ ] EntryDurationInput.tsx (inline hh:mm input)
