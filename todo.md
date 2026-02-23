@@ -168,14 +168,14 @@
 
 ## UI — Reports (FEATURE_reports.md)
 
-- [ ] PeriodSelector.tsx (Today/Week/Month/Custom + DateRangePicker)
-- [ ] ReportViewToggle.tsx (переключение By Projects | By Tags)
-- [ ] ReportProjectRow.tsx (expandable + earnings column + archived badge)
-- [ ] ReportTagRow.tsx (expandable, группа «No tag»)
-- [ ] ReportTable.tsx (универсальная, принимает viewMode + показывает earnings колонку если есть данные)
-- [ ] ExportButton.tsx (с loading state)
-- [ ] ReportsPage.tsx
-- [ ] Создать страницу /reports
+- [x] PeriodSelector.tsx (Today/Week/Month/Custom + DateRangePicker)
+- [x] ReportViewToggle.tsx (переключение By Projects | By Tags)
+- [x] ReportProjectRow.tsx (expandable + earnings column + archived badge)
+- [x] ReportTagRow.tsx (expandable, группа «No tag»)
+- [x] ReportTable.tsx (универсальная, принимает viewMode + показывает earnings колонку если есть данные)
+- [x] ExportButton.tsx (с loading state)
+- [x] ReportsPage.tsx
+- [x] Создать страницу /reports
 
 ## UI — Navigation
 

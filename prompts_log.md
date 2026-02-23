@@ -580,3 +580,43 @@ Create app/tags/page.tsx
 Update TagSelect.tsx if needed — allow "Create new tag" option inline in dropdown
   POST /api/tags → add to list → select it
 ```
+
+---
+
+## Промпт 12: UI — Reports Page
+
+```
+Read #file:spec/FEATURE_reports.md
+
+Create components/reports/:
+
+PeriodSelector.tsx — Today / This Week / This Month / Custom
+  Custom: two date inputs (from, to)
+  Emits { from: Date, to: Date } to parent
+
+ReportViewToggle.tsx — toggles between "By Projects" and "By Tags" view
+  Props: value: 'projects' | 'tags', onChange
+
+ReportProjectRow.tsx — expandable row
+  Collapsed: project color + name + billable hours + total hours + %
+             + earnings column (only if any project has hourlyRate)
+  Expanded: list of individual entries for this project
+  Archived projects shown with (archived) badge
+
+ReportTagRow.tsx — expandable row (same pattern as ProjectRow but for tags)
+  Collapsed: tag color + name + billable hours + total hours + %
+  Expanded: list of individual entries with this tag
+  "No tag" group at bottom
+
+ReportTable.tsx — receives viewMode prop, renders ProjectRows or TagRows,
+  total footer row. Shows earnings column header only if totalEarnings != null
+
+ExportButton.tsx — fetches /api/reports/export?from=&to= as blob download
+  loading state during fetch
+
+ReportsPage.tsx — client component
+  State: period + reportData + viewMode ('projects' | 'tags')
+  Renders: PeriodSelector + ReportViewToggle + ReportTable + ExportButton
+
+Create app/reports/page.tsx
+```
