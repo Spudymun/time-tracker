@@ -144,11 +144,11 @@ describe("buildReport", () => {
     const result = buildReport([entry], FROM, TO);
     expect(result.totalSeconds).toBe(3600);
     expect(result.byProject).toHaveLength(1);
-    expect(result.byProject[0].projectId).toBeNull();
-    expect(result.byProject[0].totalSeconds).toBe(3600);
-    expect(result.byProject[0].entryCount).toBe(1);
-    expect(result.byProject[0].percentage).toBe(100);
-    expect(result.byProject[0].earnings).toBeNull();
+    expect(result.byProject[0]!.projectId).toBeNull();
+    expect(result.byProject[0]!.totalSeconds).toBe(3600);
+    expect(result.byProject[0]!.entryCount).toBe(1);
+    expect(result.byProject[0]!.percentage).toBe(100);
+    expect(result.byProject[0]!.earnings).toBeNull();
   });
 
   it("несколько проектов → корректная группировка и процент", () => {
@@ -163,16 +163,16 @@ describe("buildReport", () => {
     expect(result.totalSeconds).toBe(14400);
     expect(result.byProject).toHaveLength(2);
 
-    const alpha = result.byProject.find((p) => p.projectId === "proj-a");
-    const beta = result.byProject.find((p) => p.projectId === "proj-b");
+    const alpha = result.byProject.find((p) => p.projectId === "proj-a")!;
+    const beta = result.byProject.find((p) => p.projectId === "proj-b")!;
 
-    expect(alpha?.totalSeconds).toBe(7200);
-    expect(alpha?.entryCount).toBe(2);
-    expect(alpha?.percentage).toBe(50);
+    expect(alpha.totalSeconds).toBe(7200);
+    expect(alpha.entryCount).toBe(2);
+    expect(alpha.percentage).toBe(50);
 
-    expect(beta?.totalSeconds).toBe(7200);
-    expect(beta?.entryCount).toBe(1);
-    expect(beta?.percentage).toBe(50);
+    expect(beta.totalSeconds).toBe(7200);
+    expect(beta.entryCount).toBe(1);
+    expect(beta.percentage).toBe(50);
   });
 
   it("byProject отсортированы по totalSeconds по убыванию", () => {
@@ -183,8 +183,8 @@ describe("buildReport", () => {
       makeEntry({ project: projB, durationSeconds: 999 }),
     ];
     const result = buildReport(entries, FROM, TO);
-    expect(result.byProject[0].projectId).toBe("proj-b");
-    expect(result.byProject[1].projectId).toBe("proj-a");
+    expect(result.byProject[0]!.projectId).toBe("proj-b");
+    expect(result.byProject[1]!.projectId).toBe("proj-a");
   });
 
   it("billable записи вычисляются отдельно", () => {
@@ -195,7 +195,7 @@ describe("buildReport", () => {
     ];
     const result = buildReport(entries, FROM, TO);
     expect(result.billableSeconds).toBe(3600);
-    expect(result.byProject[0].billableSeconds).toBe(3600);
+    expect(result.byProject[0]!.billableSeconds).toBe(3600);
   });
 
   it("totalEarnings: null если ни у одного проекта нет ставки", () => {
@@ -206,7 +206,7 @@ describe("buildReport", () => {
       TO
     );
     expect(result.totalEarnings).toBeNull();
-    expect(result.byProject[0].earnings).toBeNull();
+    expect(result.byProject[0]!.earnings).toBeNull();
   });
 
   it("totalEarnings: сумма по проектам со ставкой", () => {
@@ -218,14 +218,14 @@ describe("buildReport", () => {
     ];
     const result = buildReport(entries, FROM, TO);
     expect(result.totalEarnings).toBe(200);
-    expect(result.byProject.find((p) => p.projectId === "proj-a")?.earnings).toBe(100);
-    expect(result.byProject.find((p) => p.projectId === "proj-b")?.earnings).toBe(100);
+    expect(result.byProject.find((p) => p.projectId === "proj-a")!.earnings).toBe(100);
+    expect(result.byProject.find((p) => p.projectId === "proj-b")!.earnings).toBe(100);
   });
 
   it("isArchived: флаг из проекта попадает в результат", () => {
     const proj = makeProject("proj-a", "Alpha", { isArchived: true });
     const result = buildReport([makeEntry({ project: proj, durationSeconds: 3600 })], FROM, TO);
-    expect(result.byProject[0].isArchived).toBe(true);
+    expect(result.byProject[0]!.isArchived).toBe(true);
   });
 
   it("from/to форматируются как YYYY-MM-DD", () => {
@@ -255,11 +255,11 @@ describe("buildTagReport", () => {
     const entry = makeEntry({ tags: [], durationSeconds: 3600 });
     const result = buildTagReport([entry]);
     expect(result).toHaveLength(1);
-    expect(result[0].tagId).toBeNull();
-    expect(result[0].tagName).toBeNull();
-    expect(result[0].totalSeconds).toBe(3600);
-    expect(result[0].entryCount).toBe(1);
-    expect(result[0].percentage).toBe(100);
+    expect(result[0]!.tagId).toBeNull();
+    expect(result[0]!.tagName).toBeNull();
+    expect(result[0]!.totalSeconds).toBe(3600);
+    expect(result[0]!.entryCount).toBe(1);
+    expect(result[0]!.percentage).toBe(100);
   });
 
   it("запись с одним тегом → один элемент в массиве", () => {
@@ -267,9 +267,9 @@ describe("buildTagReport", () => {
     const entry = makeEntry({ tags: [tag], durationSeconds: 3600 });
     const result = buildTagReport([entry]);
     expect(result).toHaveLength(1);
-    expect(result[0].tagId).toBe("tag-1");
-    expect(result[0].tagName).toBe("Development");
-    expect(result[0].color).toBe("#3b82f6");
+    expect(result[0]!.tagId).toBe("tag-1");
+    expect(result[0]!.tagName).toBe("Development");
+    expect(result[0]!.color).toBe("#3b82f6");
   });
 
   it("запись с несколькими тегами → вносит вклад в КАЖДУЮ тег-группу", () => {
@@ -280,12 +280,12 @@ describe("buildTagReport", () => {
 
     // Запись с 2 тегами → 2 группы, каждая получает её 3600с
     expect(result.filter((r) => r.tagId !== null)).toHaveLength(2);
-    const devGroup = result.find((r) => r.tagId === "tag-a");
-    const bugGroup = result.find((r) => r.tagId === "tag-b");
-    expect(devGroup?.totalSeconds).toBe(3600);
-    expect(bugGroup?.totalSeconds).toBe(3600);
-    expect(devGroup?.entryCount).toBe(1);
-    expect(bugGroup?.entryCount).toBe(1);
+    const devGroup = result.find((r) => r.tagId === "tag-a")!;
+    const bugGroup = result.find((r) => r.tagId === "tag-b")!;
+    expect(devGroup.totalSeconds).toBe(3600);
+    expect(bugGroup.totalSeconds).toBe(3600);
+    expect(devGroup.entryCount).toBe(1);
+    expect(bugGroup.entryCount).toBe(1);
   });
 
   it("percentage рассчитан от totalSeconds всех completed записей", () => {
@@ -296,11 +296,11 @@ describe("buildTagReport", () => {
       makeEntry({ tags: [tagB], durationSeconds: 1000 }),
     ];
     const result = buildTagReport(entries);
-    const devGroup = result.find((r) => r.tagId === "tag-a");
-    const bugGroup = result.find((r) => r.tagId === "tag-b");
+    const devGroup = result.find((r) => r.tagId === "tag-a")!;
+    const bugGroup = result.find((r) => r.tagId === "tag-b")!;
     // totalSeconds = 4000: dev=75%, bug=25%
-    expect(devGroup?.percentage).toBe(75);
-    expect(bugGroup?.percentage).toBe(25);
+    expect(devGroup.percentage).toBe(75);
+    expect(bugGroup.percentage).toBe(25);
   });
 
   it("группа без тега всегда идёт последней", () => {
@@ -310,7 +310,7 @@ describe("buildTagReport", () => {
       makeEntry({ tags: [tag], durationSeconds: 2000 }), // tag-1
     ];
     const result = buildTagReport(entries);
-    expect(result[result.length - 1].tagId).toBeNull();
+    expect(result[result.length - 1]!.tagId).toBeNull();
   });
 
   it("billableSeconds подсчитывается только для billable=true", () => {
@@ -320,8 +320,8 @@ describe("buildTagReport", () => {
       makeEntry({ tags: [tag], durationSeconds: 1800, billable: false }),
     ];
     const result = buildTagReport(entries);
-    expect(result[0].billableSeconds).toBe(3600);
-    expect(result[0].totalSeconds).toBe(5400);
+    expect(result[0]!.billableSeconds).toBe(3600);
+    expect(result[0]!.totalSeconds).toBe(5400);
   });
 });
 
@@ -461,10 +461,10 @@ describe("buildDashboard", () => {
       stoppedAt: new Date("2026-02-18T11:00:00.000Z"),
     });
     const result = buildDashboard([entry], FROM, TO);
-    const tuesdayDay = result.byDay.find((d) => d.date === "2026-02-18");
-    expect(tuesdayDay?.totalSeconds).toBe(3600);
-    expect(tuesdayDay?.byProject).toHaveLength(1);
-    expect(tuesdayDay?.byProject[0].projectId).toBe("proj-a");
+    const tuesdayDay = result.byDay.find((d) => d.date === "2026-02-18")!;
+    expect(tuesdayDay.totalSeconds).toBe(3600);
+    expect(tuesdayDay.byProject).toHaveLength(1);
+    expect(tuesdayDay.byProject[0]!.projectId).toBe("proj-a");
   });
 
   it("topProjects: только Top 5 по totalSeconds", () => {
@@ -477,17 +477,17 @@ describe("buildDashboard", () => {
     const result = buildDashboard(entries, FROM, TO);
     expect(result.topProjects).toHaveLength(5);
     // Первый — с наибольшим временем (proj-5 = 6000с)
-    expect(result.topProjects[0].projectId).toBe("proj-5");
+    expect(result.topProjects[0]!.projectId).toBe("proj-5");
   });
 
   it("более 7 проектов в день → остаток объединяется в 'Other'", () => {
     const projects = Array.from({ length: 8 }, (_, i) => makeProject(`proj-${i}`, `Proj${i}`));
     const entries = projects.map((proj) => makeEntry({ project: proj, durationSeconds: 100 }));
     const result = buildDashboard(entries, FROM, TO);
-    const monday = result.byDay.find((d) => d.date === "2026-02-17");
+    const monday = result.byDay.find((d) => d.date === "2026-02-17")!;
     // max 7 + "Other"
-    expect(monday?.byProject.length).toBeLessThanOrEqual(8);
-    const other = monday?.byProject.find((p) => p.projectName === "Other");
+    expect(monday.byProject.length).toBeLessThanOrEqual(8);
+    const other = monday.byProject.find((p) => p.projectName === "Other");
     expect(other).toBeDefined();
   });
 
