@@ -757,3 +757,41 @@ Create system Next.js pages and loading states:
 
 Follow #file:spec/UI_STATES.md
 ```
+
+---
+
+## Промпт 16: Финальная проверка
+
+```
+Review implementation against all specs:
+
+1. Read #file:spec.md — are all #functional requirements implemented?
+2. Read #file:spec/BUSINESS_RULES.md — are all rules enforced?
+3. Read #file:spec/DESIGN_SYSTEM.md — check design consistency:
+   - NO inline style={{}} except dynamic colors
+   - All loading states use <Spinner />
+   - All interactive elements have hover/focus/disabled states
+   - Button/Input/Modal/Toast from components/ui/ everywhere
+4. Read #file:spec/UI_STATES.md — check all states are implemented:
+   - app/not-found.tsx, app/error.tsx, app/global-error.tsx exist
+   - Per-page loading.tsx files exist
+   - Empty states for EntriesList, ProjectsList, TagsList, ReportTable, Dashboard
+   - Error states with Retry in EntriesList, Dashboard, Reports
+   - lib/utils/api-client.ts used in all stores (401 interceptor)
+5. Read #file:spec/FEATURE_auth.md — check auth integration:
+   - Every API route has `const session = await auth(); if (!session) return 401`
+   - Repositories always filter by userId
+   - middleware.ts exists and protects all non-public routes
+   - login/register pages render without TimerBar
+   - UserMenu visible in main layout
+6. Read each #file:spec/FEATURE_*.md — are all edge cases handled?
+7. Check: only one active timer per user (not globally)
+8. Check: accessing /api/projects without session → 401
+9. Check: CSV export works (0 entries → headers only; from>to → 400)
+10. Check: TagSelect blocks adding 11th tag (tooltip «Maximum 10 tags»)
+11. Check: WeeklyTargetBar reads localStorage in useEffect (no hydration mismatch)
+12. Check: OAuth login creates User + Account
+
+Run: npm run type-check, npm run lint, npx vitest run
+Report all gaps. Fix them.
+```

@@ -220,7 +220,7 @@ export function EntryItem({ entry, projects, tags }: EntryItemProps) {
         {/* Архивированный проект — предупреждение */}
         {editProject?.isArchived && (
           <p className="mt-1.5 text-xs text-text-3">
-            Project is archived. You can still assign it but it won't appear in new timers.
+            Project is archived. You can still assign it but it won&apos;t appear in new timers.
           </p>
         )}
       </div>

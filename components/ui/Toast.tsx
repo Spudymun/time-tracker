@@ -9,7 +9,7 @@
  * Добавить ToastProvider в app/layout.tsx.
  */
 
-import { createContext, useCallback, useContext, useId, useState } from "react";
+import { createContext, useCallback, useContext, useState } from "react";
 import { CheckCircle2, XCircle, Info, AlertTriangle, X } from "lucide-react";
 
 // ── Types ──────────────────────────────────────────────────────────────────
