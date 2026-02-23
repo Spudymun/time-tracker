@@ -1,188 +1,204 @@
-# [PROJECT_NAME] — Template
+# Time Tracker
 
-Production-ready шаблон для spec-driven разработки с GitHub Copilot.
-Стек: Next.js 15, TypeScript strict, TailwindCSS v4, Prisma v7, Zod, Vitest.
+Веб-приложение для учёта рабочего времени для фрилансеров, вдохновлённое Toggl.
+Позволяет запускать/останавливать таймер, вести проекты и теги, отмечать billable-часы,
+просматривать дашборд за неделю и экспортировать отчёты в CSV.
 
-## Что включено
-
-```
-.github/
-  copilot-instructions.md          # Always-on: tech stack, конвенции
-  instructions/
-    ai-agent-rules.instructions.md # Правила поведения агента
-    typescript.instructions.md     # TS/React стандарты
-    api-routes.instructions.md     # API паттерны
-    tests.instructions.md          # Vitest конвенции
-    prisma.instructions.md         # Prisma/DB паттерны
-  agents/
-    planner.agent.md               # Агент-планировщик (read-only)
-    reviewer.agent.md              # Агент code review
-  prompts/
-    new-feature.prompt.md          # /new-feature slash command
-    spec-review.prompt.md          # /spec-review slash command
-    new-component.prompt.md        # /new-component slash command
-  skills/
-    spec-driven/SKILL.md           # Skill: spec-driven workflow
-    db-operations/SKILL.md         # Skill: репозитории и Prisma
-
-.vscode/
-  mcp.json                         # MCP серверы (auto-launch)
-  settings.json                    # VS Code + Copilot настройки
-  extensions.json                  # Рекомендуемые расширения
-
-spec/
-  VISION.md                        # Что и зачем
-  DOMAIN.md                        # Сущности и связи
-  ARCHITECTURE.md                  # Архитектурные решения
-  BUSINESS_RULES.md                # Бизнес-правила
-  FEATURE_template.md              # Шаблон спецификации фичи
-
-mcp/
-  server.ts                        # Custom MCP server (TypeScript)
-  package.json / tsconfig.json
-  README.md
-
-eslint.config.mjs                  # ESLint flat config
-prettier.config.js                 # Prettier + TailwindCSS plugin
-next.config.ts                     # Security headers
-package.json                       # Все скрипты
-prisma/schema.prisma               # Шаблон Prisma схемы
-spec.md / prompt_plan.md / todo.md # Spec-driven workflow файлы
-```
+**Live Demo:** _ссылка появится после деплоя_
 
 ---
 
-## Начало нового проекта
+## Функциональность
 
-### Шаг 1: Скопируй шаблон
+### Основной трекер времени
+- Кнопки **Start / Stop** для учёта времени
+- Поле названия задачи с **автодополнением** из предыдущих задач
+- Выбор **проекта** из выпадающего списка, выбор **тегов** (мульти-выбор, до 10)
+- Отметка **Billable** (оплачиваемые часы)
+- Активный таймер **всегда виден** в шапке страницы
 
-```bash
-cp -r E:\project\vibe-coder-template E:\project\your-project
-cd E:\project\your-project
+### Управление записями
+- Список записей с группировкой по **дате** (Today / Yesterday / дата)
+- Группировка внутри дня по **проектам** с суммой времени
+- **Инлайн-редактирование**: название задачи, проект, теги, billable
+- **Ручная коррекция времени** (формат гг:мм, диапазон 00:01–99:59)
+- Удаление записей с подтверждением
+- Фильтрация по проекту, тегу, billable, тексту
+- **Continue** — повторить запись одним кликом
+
+### Управление проектами
+- Создание и редактирование проектов с цветовой меткой
+- Бюджет часов (estimatedHours) с прогресс-баром
+- Почасовая ставка (hourlyRate) для расчёта заработка
+- Архивирование/разархивирование проектов
+
+### Теги
+- Создание, редактирование, удаление тегов с цветом
+- Привязка к записям времени
+
+### Дашборд
+- График за текущую неделю (stacked bar по проектам)
+- Топ проектов с заработком
+- Прогресс к цели недели (сохраняется в localStorage)
+- Навигация по неделям
+
+### Отчёты
+- Выбор периода: День / Неделя / Месяц / Произвольный диапазон
+- Группировка по проектам или по тегам
+- Колонка заработка (если задана hourlyRate)
+- **Экспорт в CSV**
+
+### Аутентификация
+- Регистрация / вход по email + пароль (bcrypt)
+- OAuth: GitHub, Google
+- JWT-стратегия (Auth.js v5), полная изоляция данных по userId
+
+---
+
+## Стек технологий
+
+| Слой | Технология |
+|------|-----------|
+| Frontend | Next.js 15, App Router, React 19 |
+| Язык | TypeScript (strict mode) |
+| Стили | TailwindCSS v4 |
+| Состояние | Zustand v5 |
+| Auth | Auth.js v5 (next-auth@beta) + @auth/prisma-adapter |
+| ORM | Prisma v7 + @prisma/adapter-pg |
+| База данных | PostgreSQL (Neon.tech) |
+| Валидация | Zod v4 |
+| Графики | Recharts |
+| Тесты | Vitest (103 теста) |
+
+---
+
+## Архитектура
+
+```
+app/                          # Next.js App Router
+  (main)/page.tsx             # Главная: Dashboard + EntriesList
+  (auth)/login|register/      # Auth-страницы (отдельный layout)
+  projects/page.tsx           # Управление проектами
+  tags/page.tsx               # Управление тегами
+  reports/page.tsx            # Отчёты
+  api/                        # API Routes
+
+components/
+  auth/                       # LoginForm, RegisterForm, OAuthButton
+  timer/                      # TimerBar, TimerControls, TimerDisplay, TaskAutocomplete
+  entries/                    # EntriesList, EntriesDayGroup, EntryItem, EntryDurationInput
+  projects/                   # ProjectsList, ProjectItem, ColorPicker
+  tags/                       # TagsList, TagItem, TagForm
+  reports/                    # ReportsPage, PeriodSelector, ReportTable, ExportButton
+  dashboard/                  # DashboardWidget, WeeklyBarChart, TopProjectsList
+  ui/                         # Button, Input, Select, Modal, Toast, Badge, Spinner, UserMenu
+
+lib/
+  auth.ts                     # Auth.js config (providers, JWT callbacks)
+  stores/                     # Zustand: timer-store.ts, entries-store.ts
+  services/                   # report-service.ts, time-format-service.ts
+  db/                         # *-repository.ts (все методы принимают userId)
+  validations/                # Zod-схемы: project, tag, time-entry, auth
+  utils/                      # date-utils.ts, api-client.ts (401 interceptor)
+  prisma.ts                   # Prisma client singleton
+
+prisma/
+  schema.prisma               # User, Account, Project, Tag, TimeEntry, TimeEntryTag
 ```
 
-### Шаг 2: Настрой окружение
+**Ключевые решения:**
+- Репозитории — единственный путь к БД (Prisma не используется напрямую в компонентах)
+- `userId` всегда из сессии Auth.js, никогда из request body
+- Zustand stores используют `apiFetch` с 401-interceptor → redirect /login
+- TailwindCSS v4 CSS-first: только семантические токены (`bg-primary`, `text-text-1`)
+
+---
+
+## Запуск локально
+
+### Требования
+- Node.js 20+
+- PostgreSQL (или аккаунт [Neon.tech](https://neon.tech))
+
+### Шаги
 
 ```bash
-# Установи зависимости проекта
+# 1. Клонировать репозиторий
+git clone https://github.com/YOUR_USERNAME/time-tracker.git
+cd time-tracker
+
+# 2. Установить зависимости
 npm install
 
-# Скопируй и заполни .env.local
+# 3. Настроить окружение
 cp .env.example .env.local
-# → DATABASE_URL=postgresql://...
+# → заполнить переменные (см. ниже)
+
+# 4. Применить схему к БД
+npm run db:push
+
+# 5. Запустить dev server
+npm run dev
+# → http://localhost:3000
 ```
 
-### Шаг 3: Собери MCP сервер
+### Переменные окружения
 
-```bash
-npm run mcp:build
+```env
+DATABASE_URL="postgresql://user:password@host:5432/db?sslmode=require"
+AUTH_SECRET="your-32-char-secret"   # openssl rand -base64 32
+
+# OAuth (опционально)
+AUTH_GITHUB_ID=
+AUTH_GITHUB_SECRET=
+AUTH_GOOGLE_CLIENT_ID=
+AUTH_GOOGLE_CLIENT_SECRET=
 ```
-
-После этого VS Code автоматически запустит MCP сервер при следующем открытии.
-
-### Шаг 4: Заполни spec
-
-1. Открой `spec/VISION.md` — опиши что строишь и для кого
-2. Открой `spec/DOMAIN.md` — опиши сущности и связи
-3. Открой `spec/BUSINESS_RULES.md` — опиши правила
-4. Создай `spec/FEATURE_{name}.md` для каждой фичи (скопируй из `FEATURE_template.md`)
-5. Заполни корневой `spec.md` через Harper Reed workflow (см. ниже)
-
-### Шаг 5: Обнови `.github/copilot-instructions.md`
-
-Замени плейсхолдеры `[PROJECT_NAME]` на реальное название проекта.
-
-### Шаг 6: Начни разработку
-
-Открой VS Code Agent Mode → используй prompts:
-- `/new-feature {name}` — реализовать фичу по spec
-- `/spec-review` — сравнить реализацию со spec
-- `/new-component {name}` — создать компонент
-
-Или используй `@planner` для планирования перед реализацией.
-
----
-
-## Harper Reed Workflow (spec-driven)
-
-### Этап 1: Brainstorm → spec.md
-
-Используй ChatGPT/Claude с промптом:
-```
-Ask me one question at a time so we can develop a thorough, step-by-step spec
-for this idea. Our end goal is a detailed specification I can hand off.
-Only one question at a time.
-
-Here's the idea: [DESCRIBE YOUR IDEA]
-```
-
-После сессии:
-```
-Now compile our findings into a developer-ready specification with all
-requirements, architecture choices, error handling, and testing plan.
-```
-
-Сохрани результат в `spec.md`.
-
-### Этап 2: Plan → prompt_plan.md
-
-Используй reasoning-модель (o3/Claude) с промптом:
-```
-Draft a step-by-step blueprint for building this project.
-Break into small iterative steps that build on each other.
-Provide prompts for a code-generation LLM with TDD approach.
-No hanging code — every step integrates into previous.
-
-<SPEC>
-[содержимое spec.md]
-</SPEC>
-```
-
-Сохрани как `prompt_plan.md`, список задач в `todo.md`.
-
-### Этап 3: Execute → Agent Mode
-
-Выполняй промпты из `prompt_plan.md` по одному в Copilot Agent Mode.
-После каждого: `npx vitest run` + ручная проверка.
-
----
-
-## MCP Серверы
-
-При открытии VS Code автоматически стартуют:
-
-| Сервер | Что делает | Требует |
-|--------|-----------|---------|
-| `project-context` | Читает spec-файлы для агента | `npm run mcp:build` |
-| `filesystem` | Расширенный доступ к файлам | npx |
-| `git` | Git операции | uv (`pip install uv`) |
-| `github` | GitHub API | GITHUB_TOKEN (вводится при запросе) |
-| `postgres` | Прямые SQL запросы к БД | DATABASE_URL (вводится при запросе) |
-| `memory` | Персистентная память | npx |
 
 ---
 
 ## Скрипты
 
 ```bash
-npm run dev          # Dev server (localhost:3000)
-npm run build        # Production build
-npm run type-check   # TypeScript без emit
-npm run lint         # ESLint
-npm run format       # Prettier
-npx vitest run       # Тесты
-npm run db:push      # Применить Prisma schema
-npm run db:generate  # Сгенерировать Prisma client
-npm run mcp:build    # Собрать custom MCP server
+npm run dev           # Dev server (localhost:3000)
+npm run build         # Production build
+npm run type-check    # TypeScript без emit
+npm run lint          # ESLint
+npm run format        # Prettier
+npx vitest run        # Тесты (103 теста)
+npm run db:push       # Применить Prisma schema к БД
+npm run db:studio     # Prisma Studio
+npm run db:generate   # Сгенерировать Prisma client
 ```
 
 ---
 
-## Добавление RTL тестов (опционально)
+## Тесты
 
-По умолчанию vitest настроен для node-среды (unit тесты сервисов).
-Для компонентных тестов с jsdom:
+Unit-тесты сервисов и Zod-схем (Vitest, node environment):
 
-1. `npm install --save-dev @testing-library/react jsdom`
-2. В `vitest.config.ts` → `environment: "jsdom"`
-3. Или использовать `@vitest/environment-jsdom` per-file: `// @vitest-environment jsdom`
+```bash
+npx vitest run
+# 103 тестов, 0 failed
+```
+
+Покрытие:
+- `lib/validations/project-schema.test.ts` — 20 тестов
+- `lib/validations/tag-schema.test.ts` — 16 тестов
+- `lib/validations/time-entry-schema.test.ts` — 23 теста
+- `lib/services/report-service.test.ts` — 44 теста
+
+---
+
+## Деплой на Vercel
+
+1. Запушить код на GitHub
+2. Зайти на [vercel.com](https://vercel.com) → **Import Project** → выбрать репо
+3. Добавить **Environment Variables** в настройках Vercel:
+   - `DATABASE_URL` — PostgreSQL строка подключения (Neon.tech)
+   - `AUTH_SECRET` — случайная строка (≥32 символа)
+   - OAuth-ключи при необходимости
+4. Нажать **Deploy**
+5. После деплоя выполнить `npx prisma db push` с production `DATABASE_URL` — создать таблицы
+
+> `postinstall: prisma generate` в package.json гарантирует генерацию Prisma client на Vercel автоматически.

@@ -29,16 +29,9 @@
   // ─── MCP ──────────────────────────────────────────────────────────────────
   // Разрешить все MCP серверы из mcp.json
   "chat.mcp.access": "all",
-  // Автозапуск MCP серверов при открытии VS Code
+  // Автозапуск MCP серверов при открытии VS Code — отключён для производительности
   // ВАЖНО: project-context требует `npm run mcp:build` перед первым запуском
-  "chat.mcp.autoStart": "newAndOutdated",
-  // Автообнаружение MCP от Claude Desktop (выключено по умолчанию)
-  "chat.mcp.discovery.enabled": {
-    "claude-desktop": false,
-    "windsurf": false,
-    "cursor-global": false,
-    "cursor-workspace": false
-  },
+  "chat.mcp.autoStart": "off",
 
   // ─── AGENTS, SKILLS, PROMPTS ──────────────────────────────────────────────
   "chat.useAgentSkills": true,
@@ -96,5 +89,39 @@
   },
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit"
-  }
+  },
+
+  // ─── PERFORMANCE ──────────────────────────────────────────────────────────
+  "files.watcherExclude": {
+    "**/.git/objects/**": true,
+    "**/.git/subtree-cache/**": true,
+    "**/node_modules/**": true,
+    "**/.next/**": true,
+    "**/dist/**": true,
+    "**/mcp/dist/**": true,
+    "**/prisma/generated/**": true,
+    "**/.turbo/**": true
+  },
+  "files.exclude": {
+    "**/.git": true,
+    "**/node_modules": true,
+    "**/.next": true,
+    "**/mcp/dist": true
+  },
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/dist": true,
+    "**/.next": true,
+    "**/.git": true,
+    "**/prisma/generated": true,
+    "**/mcp/dist": true
+  },
+  // Ограничить память TS Language Server (по умолчанию неограниченно)
+  "typescript.tsserver.maxTsServerMemory": 2048,
+  // Не восстанавливать терминалы при перезапуске VS Code (причина 16 терминалов!)
+  "terminal.integrated.persistentSessionReviveProcess": "never",
+  // Не восстанавливать вкладки при перезапуске (опционально)
+  // "workbench.editor.restoreViewState": false,
+  "editor.bracketPairColorization.enabled": true,
+  "editor.guides.bracketPairs": "active"
 }

@@ -1,19 +1,6 @@
 {
   "servers": {
-    "filesystem": {
-      "type": "stdio",
-      "command": "npx",
-      "args": [
-        "-y",
-        "@modelcontextprotocol/server-filesystem",
-        "${workspaceFolder}"
-      ]
-    },
-    "git": {
-      "type": "stdio",
-      "command": "uvx",
-      "args": ["mcp-server-git", "--repository", "${workspaceFolder}"]
-    },
+    // Кастомный MCP сервер проекта — читает spec-файлы для агента
     "project-context": {
       "type": "stdio",
       "command": "node",
@@ -21,42 +8,11 @@
       "env": {
         "WORKSPACE_ROOT": "${workspaceFolder}"
       }
-    },
-    "github": {
-      "type": "stdio",
-      "command": "npx",
-      "args": ["-y", "@github/github-mcp-server"],
-      "env": {
-        "GITHUB_PERSONAL_ACCESS_TOKEN": "${input:github-token}"
-      }
-    },
-    "postgres": {
-      "type": "stdio",
-      "command": "npx",
-      "args": [
-        "-y",
-        "@modelcontextprotocol/server-postgres",
-        "${input:database-url}"
-      ]
-    },
-    "memory": {
-      "type": "stdio",
-      "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-memory"]
     }
-  },
-  "inputs": [
-    {
-      "type": "promptString",
-      "id": "github-token",
-      "description": "GitHub Personal Access Token (repo, issues, PRs)",
-      "password": true
-    },
-    {
-      "type": "promptString",
-      "id": "database-url",
-      "description": "PostgreSQL connection string (DATABASE_URL)",
-      "password": true
-    }
-  ]
+    // Удалены: filesystem (встроен в Copilot нативно),
+    //          git (используй встроенный Git Copilot),
+    //          memory (не нужен в этом проекте),
+    //          github (подключай по необходимости через user settings),
+    //          postgres (подключай по необходимости через user settings)
+  }
 }
