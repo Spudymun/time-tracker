@@ -98,7 +98,7 @@ model TimeEntry {
   id              String    @id @default(uuid())
   userId          String
   description     String?
-  projectId       String?   @db.Uuid
+  projectId       String?
   billable        Boolean   @default(false)
   startedAt       DateTime
   stoppedAt       DateTime?

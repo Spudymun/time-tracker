@@ -1,6 +1,7 @@
 "use client";
 
 import { create } from "zustand";
+import { useShallow } from "zustand/react/shallow";
 import type { TimeEntryWithRelations } from "@/lib/db/time-entries-repository";
 import type { CreateEntryInput } from "@/lib/validations/time-entry-schema";
 import { apiFetch } from "@/lib/utils/api-client";
@@ -127,10 +128,12 @@ export const useTimerIsLoading = () => useTimerStore((s) => s.isLoading);
 
 // Возвращает только actions — они не меняются, не вызывают ре-рендер
 export const useTimerActions = () =>
-  useTimerStore((s) => ({
-    initTimer: s.initTimer,
-    startTimer: s.startTimer,
-    stopTimer: s.stopTimer,
-    tick: s.tick,
-    setActiveEntry: s.setActiveEntry,
-  }));
+  useTimerStore(
+    useShallow((s) => ({
+      initTimer: s.initTimer,
+      startTimer: s.startTimer,
+      stopTimer: s.stopTimer,
+      tick: s.tick,
+      setActiveEntry: s.setActiveEntry,
+    }))
+  );

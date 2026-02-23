@@ -795,3 +795,62 @@ Review implementation against all specs:
 Run: npm run type-check, npm run lint, npx vitest run
 Report all gaps. Fix them.
 ```
+
+---
+
+## Промпт 17
+
+```
+Задача: твоя роль QA manual.
+теперь нужно сделать todo но уже для проверки работы приложения. Должно быть охвачено все что только проверяет синьор в контексте нашего приложения(смотри спеку).
+```
+
+---
+
+## Промпт 18
+
+```
+Задача: запустить и проверить то что можешь проверить своими инструментами из E:\project\time-tracker\QA_CHECKLIST.md. То что не можешь проверить пометь как не смог и я проверю сам.
+```
+
+---
+
+## Промпт 19
+
+```
+Я против давай не избегать проблемы, а решать её. Проведи исследование в интернете этой проблемы.
+```
+
+---
+
+## Промпт 20
+
+```
+Продолжай теперь как мануальны
+```
+
+---
+
+## Промпт 21
+
+```
+GET /api/auth/session 200 in 37ms
+ GET /login 200 in 262ms
+ GET /api/auth/session 200 in 39ms
+ GET /login 200 in 231ms
+ GET /api/auth/session 200 in 32ms
+ GET /login 200 in 258ms
+ GET /api/auth/session 200 in 33ms
+ GET /login 200 in 264ms
+ GET /api/auth/session 200 in 34ms
+ GET /login 200 in 253ms
+ GET /api/auth/session 200 in 90ms
+ GET /login 200 in 302ms
+ GET /api/auth/session 200 in 49ms
+ GET /login 200 in 301ms
+ GET /api/auth/session 200 in 24ms
+ GET /login 200 in 234ms
+ GET /api/auth/session 200 in 38ms
+ GET /login 200 in 278ms
+ постоянные переключения. Это ошибка на уровне логики работы приложения
+```

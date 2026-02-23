@@ -1,5 +1,18 @@
-import { auth } from "@/lib/auth";
+import NextAuth from "next-auth";
 import { NextResponse } from "next/server";
+import authConfig from "@/lib/auth.config";
+
+/**
+ * Edge-совместимый NextAuth — инициализируется БЕЗ Prisma adapter.
+ *
+ * ПОЧЕМУ отдельная инициализация (не импорт из lib/auth.ts):
+ * lib/auth.ts подключает PrismaAdapter → Prisma → node:crypto / node:os,
+ * которые несовместимы с Edge Runtime, используемым middleware.
+ *
+ * Middleware нужна только функция auth() для проверки сессионного cookie.
+ * Никаких обращений к БД здесь не происходит.
+ */
+const { auth } = NextAuth(authConfig);
 
 /**
  * Публичные маршруты — доступны без сессии.

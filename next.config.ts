@@ -50,8 +50,22 @@ const nextConfig: NextConfig = {
   },
 
   // ─── Server external packages ─────────────────────────────────────────────
-  // bcryptjs нужен только на сервере (API routes), не попадает в клиентский бандл
-  serverExternalPackages: ["bcryptjs"],
+  // bcryptjs и Prisma нужны только на сервере (API routes), не попадают в клиентский бандл.
+  // @prisma/client и адаптер используют node:crypto/fs/path — webpack их не может бандлить.
+  serverExternalPackages: ["bcryptjs", "@prisma/client", "@prisma/adapter-pg"],
+
+  // ─── Webpack ──────────────────────────────────────────────────────────────
+  // Prisma v7 с custom output (generated/) использует node:* модули.
+  // webpack не умеет резолвить node:-схему → заменяем на обычное имя модуля.
+  webpack: (config, { webpack }) => {
+    config.plugins = config.plugins ?? [];
+    config.plugins.push(
+      new webpack.NormalModuleReplacementPlugin(/^node:(.*)$/, (resource: { request: string }) => {
+        resource.request = resource.request.replace(/^node:/, "");
+      })
+    );
+    return config;
+  },
 };
 
 export default nextConfig;

@@ -1,6 +1,7 @@
 "use client";
 
 import { create } from "zustand";
+import { useShallow } from "zustand/react/shallow";
 import type { TimeEntryWithRelations } from "@/lib/db/time-entries-repository";
 import type { UpdateEntryInput } from "@/lib/validations/time-entry-schema";
 import { apiFetch } from "@/lib/utils/api-client";
@@ -158,11 +159,13 @@ export const useEntriesIsLoading = () => useEntriesStore((s) => s.isLoading);
 
 // Возвращает только actions — они не меняются, не вызывают ре-рендер
 export const useEntriesActions = () =>
-  useEntriesStore((s) => ({
-    fetchEntries: s.fetchEntries,
-    updateEntry: s.updateEntry,
-    deleteEntry: s.deleteEntry,
-    continueEntry: s.continueEntry,
-    addEntry: s.addEntry,
-    replaceActiveEntry: s.replaceActiveEntry,
-  }));
+  useEntriesStore(
+    useShallow((s) => ({
+      fetchEntries: s.fetchEntries,
+      updateEntry: s.updateEntry,
+      deleteEntry: s.deleteEntry,
+      continueEntry: s.continueEntry,
+      addEntry: s.addEntry,
+      replaceActiveEntry: s.replaceActiveEntry,
+    }))
+  );

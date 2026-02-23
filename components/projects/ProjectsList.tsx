@@ -58,10 +58,16 @@ export function ProjectsList({ initialProjects }: ProjectsListProps) {
   const handleCreate = async (data: ProjectFormData) => {
     setIsCreating(true);
     try {
+      const body = {
+        name: data.name,
+        color: data.color,
+        ...(data.estimatedHours !== null && { estimatedHours: data.estimatedHours }),
+        ...(data.hourlyRate !== null && { hourlyRate: data.hourlyRate }),
+      };
       const res = await apiFetch("/api/projects", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        body: JSON.stringify(body),
       });
 
       if (res.status === 409) {
