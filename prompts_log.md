@@ -706,3 +706,54 @@ Update app/layout.tsx:
 
 Follow #file:.github/instructions/components.instructions.md
 ```
+
+---
+
+## Промпт 16а: Системные страницы + Обработка ошибок
+
+```
+Read #file:spec/UI_STATES.md
+
+Create system Next.js pages and loading states:
+
+1. app/not-found.tsx — glобальная 404 страница
+   - Centered layout (no TimerBar needed — use a minimal wrapper)
+   - Show: icon + "Page not found" + description + Button "Go to Dashboard" href="/"
+   - NOT a client component (pure server)
+
+2. app/error.tsx — global error boundary
+   MUST be "use client" (Next.js requirement)
+   Props: { error: Error & { digest?: string }, reset: () => void }
+   - Show: icon + "Something went wrong" + description
+   - Button "Try again" calls reset()
+   - Button "Go to Dashboard" → href="/" — use Link, not router.push
+
+3. app/global-error.tsx — root layout error boundary
+   "use client"
+   Minimal HTML with <html><body>: heading + "Reload" button → window.location.reload()
+
+4. Loading states (each is an async Server Component with Suspense-compatible skeleton):
+
+   app/loading.tsx
+   - Full-screen centered <Spinner size="lg" />
+
+   app/(main)/loading.tsx
+   - Skeleton: gray DashboardWidget placeholder (h-[280px] animate-pulse rounded-lg)
+   - 3 skeleton entry rows
+
+   app/projects/loading.tsx
+   - Skeleton: "New project" button placeholder + 4 project item rows (dot + text blocks), animate-pulse
+
+   app/reports/loading.tsx
+   - Skeleton: period selector placeholder + 5 table rows, animate-pulse
+
+   app/(auth)/login/loading.tsx and app/(auth)/register/loading.tsx
+   - Centered <Spinner size="md" />
+
+5. Update stores to use apiFetch (from lib/utils/api-client.ts) instead of fetch:
+   - lib/stores/timer-store.ts: replace all fetch(...) with apiFetch(...)
+   - lib/stores/entries-store.ts: replace all fetch(...) with apiFetch(...)
+   This ensures 401 responses redirect to /login automatically.
+
+Follow #file:spec/UI_STATES.md
+```

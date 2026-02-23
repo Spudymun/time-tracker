@@ -3,6 +3,7 @@
 import { create } from "zustand";
 import type { TimeEntryWithRelations } from "@/lib/db/time-entries-repository";
 import type { CreateEntryInput } from "@/lib/validations/time-entry-schema";
+import { apiFetch } from "@/lib/utils/api-client";
 
 interface TimerState {
   activeEntry: TimeEntryWithRelations | null;
@@ -32,7 +33,7 @@ export const useTimerStore = create<TimerState>((set, get) => ({
   initTimer: async () => {
     set({ isLoading: true });
     try {
-      const res = await fetch("/api/time-entries/active");
+      const res = await apiFetch("/api/time-entries/active");
       if (!res.ok) throw new Error("Failed to fetch active entry");
       const activeEntry: TimeEntryWithRelations | null = await res.json();
 
@@ -55,7 +56,7 @@ export const useTimerStore = create<TimerState>((set, get) => ({
   startTimer: async (data: CreateEntryInput) => {
     set({ isLoading: true });
     try {
-      const res = await fetch("/api/time-entries", {
+      const res = await apiFetch("/api/time-entries", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
@@ -81,7 +82,7 @@ export const useTimerStore = create<TimerState>((set, get) => ({
 
     set({ isLoading: true });
     try {
-      const res = await fetch(`/api/time-entries/${activeEntry.id}/stop`, {
+      const res = await apiFetch(`/api/time-entries/${activeEntry.id}/stop`, {
         method: "POST",
       });
       if (!res.ok) {

@@ -3,6 +3,7 @@
 import { create } from "zustand";
 import type { TimeEntryWithRelations } from "@/lib/db/time-entries-repository";
 import type { UpdateEntryInput } from "@/lib/validations/time-entry-schema";
+import { apiFetch } from "@/lib/utils/api-client";
 
 interface EntriesState {
   entries: TimeEntryWithRelations[];
@@ -35,7 +36,7 @@ export const useEntriesStore = create<EntriesState>((set, get) => ({
         from: from.toISOString(),
         to: to.toISOString(),
       });
-      const res = await fetch(`/api/time-entries?${params.toString()}`);
+      const res = await apiFetch(`/api/time-entries?${params.toString()}`);
       if (!res.ok) throw new Error("Failed to fetch entries");
       const entries: TimeEntryWithRelations[] = await res.json();
       set({ entries, isLoading: false });
@@ -65,7 +66,7 @@ export const useEntriesStore = create<EntriesState>((set, get) => ({
     });
 
     try {
-      const res = await fetch(`/api/time-entries/${id}`, {
+      const res = await apiFetch(`/api/time-entries/${id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
@@ -94,7 +95,7 @@ export const useEntriesStore = create<EntriesState>((set, get) => ({
     set({ entries: entries.filter((e) => e.id !== id) });
 
     try {
-      const res = await fetch(`/api/time-entries/${id}`, { method: "DELETE" });
+      const res = await apiFetch(`/api/time-entries/${id}`, { method: "DELETE" });
       if (!res.ok) {
         const err = await res.json().catch(() => ({}));
         throw new Error((err as { error?: string }).error ?? "Failed to delete entry");
@@ -110,7 +111,7 @@ export const useEntriesStore = create<EntriesState>((set, get) => ({
   // После создания обновляет timer-store через setActiveEntry.
   continueEntry: async (id: string) => {
     try {
-      const res = await fetch(`/api/time-entries/${id}/continue`, {
+      const res = await apiFetch(`/api/time-entries/${id}/continue`, {
         method: "POST",
       });
       if (!res.ok) {
