@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { projectsRepository } from "@/lib/db/projects-repository";
 import { tagsRepository } from "@/lib/db/tags-repository";
 import { EntriesList } from "@/components/entries/EntriesList";
+import { DashboardWidget } from "@/components/dashboard/DashboardWidget";
 
 /**
  * Главная страница приложения.
@@ -36,7 +37,7 @@ export default async function MainPage() {
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-6">
-      {/* DashboardWidget будет добавлен в Промпте 9 */}
+      <DashboardWidget />
 
       <EntriesList projects={projectOptions} tags={tagOptions} />
     </div>

@@ -480,3 +480,45 @@ EntriesList.tsx — loads from entries-store with active filters,
 
 Connect to app/(main)/page.tsx below DashboardWidget
 ```
+
+---
+
+## Промпт 9: UI — Dashboard
+
+```
+Read #file:spec/FEATURE_dashboard.md
+
+Install recharts if not already: npm install recharts
+
+Create components/dashboard/:
+
+WeeklyBarChart.tsx — Recharts stacked BarChart
+  - 7 bars (Mon–Sun)
+  - Stacked by project
+  - X axis: day labels; Y axis: hours
+  - Tooltip: shows breakdown per project
+  - Responsive container
+
+TopProjectsList.tsx — ordered list of top 5 projects
+  - Color swatch + name + hours (+ earnings if hourlyRate set)
+  - Mini progress bar relative to #1
+
+WeeklySummary.tsx — "Total: Xh Ym" + "Billable: Xh Ym"
+  - If totalEarnings is not null: additional line "Earned: $X,XXX"
+
+WeeklyTargetBar.tsx — optional progress bar toward weekly goal
+  - Reads weeklyTargetHours from localStorage (key: 'weeklyTargetHours')
+  - Shows editable input (on click) to set the target
+  - Progress bar: green 0–79%, yellow 80–99%, blue ≥100%
+  - Hidden if no target set
+
+DashboardCompact.tsx — compact view when scrolled past
+  - Shows only "Xh Ym this week" text in a sticky bar
+  - Toggle visibility via IntersectionObserver on DashboardWidget
+
+DashboardWidget.tsx — fetches /api/dashboard, navigation ‹ ›, link to reports
+  - Renders WeeklyBarChart + WeeklySummary + WeeklyTargetBar + TopProjectsList
+  - Uses DashboardCompact when scrolled off screen
+
+Connect to app/(main)/page.tsx above EntriesList
+```

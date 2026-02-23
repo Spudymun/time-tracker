@@ -140,13 +140,13 @@
 
 ## UI — Dashboard (FEATURE_dashboard.md)
 
-- [ ] WeeklyBarChart.tsx (Recharts stacked bar)
-- [ ] TopProjectsList.tsx (с earnings если hourlyRate задан)
-- [ ] WeeklySummary.tsx (тотал + billable + earnings summary)
-- [ ] WeeklyTargetBar.tsx (прогресс к цель, localStorage, цвета: зелёный/жёлтый/синий)
-- [ ] DashboardCompact.tsx (свёрнутый вид при скролле, IntersectionObserver)
-- [ ] DashboardWidget.tsx (с навигацией по неделям)
-- [ ] Подключить на главную страницу (над EntriesList)
+- [x] WeeklyBarChart.tsx (Recharts stacked bar)
+- [x] TopProjectsList.tsx (с earnings если hourlyRate задан)
+- [x] WeeklySummary.tsx (тотал + billable + earnings summary)
+- [x] WeeklyTargetBar.tsx (прогресс к цель, localStorage, цвета: зелёный/жёлтый/синий)
+- [x] DashboardCompact.tsx (свёрнутый вид при скролле, IntersectionObserver)
+- [x] DashboardWidget.tsx (с навигацией по неделям)
+- [x] Подключить на главную страницу (над EntriesList)
 
 ## UI — Projects (FEATURE_projects.md)
 
