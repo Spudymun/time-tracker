@@ -4,7 +4,8 @@
 Позволяет запускать/останавливать таймер, вести проекты и теги, отмечать billable-часы,
 просматривать дашборд за неделю и экспортировать отчёты в CSV.
 
-**Live Demo:** _скоро_
+**Live Demo:** [time-tracker-4j71gi9g1-spudys-projects.vercel.app](https://time-tracker-4j71gi9g1-spudys-projects.vercel.app)  
+**Репозиторий:** [github.com/Spudymun/time-tracker](https://github.com/Spudymun/time-tracker)
 
 ---
 
