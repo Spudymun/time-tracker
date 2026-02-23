@@ -199,3 +199,65 @@ Every route:
 
 Follow #file:.github/instructions/api-routes.instructions.md
 ```
+
+---
+
+## Промпт 4: API Routes — Time Entries + Reports + Dashboard
+
+```
+Read #file:spec/FEATURE_timer.md, #file:spec/FEATURE_entries.md,
+     #file:spec/FEATURE_reports.md, #file:spec/FEATURE_dashboard.md
+Read #file:spec/BUSINESS_RULES.md (timer rules section)
+Read #file:spec/FEATURE_auth.md (auth section)
+
+IMPORTANT: ALL routes start with:
+  const session = await auth();
+  if (!session?.user?.id) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  const userId = session.user.id;
+
+Implement:
+
+app/api/time-entries/route.ts:
+  GET ?from &to &projectId &billable → findMany(userId, filters) → 200
+  POST (start timer):
+    - Validate CreateEntrySchema
+    - If active entry exists for this user → stop it first (stopActive with now())
+    - Create new entry with userId + startedAt = now()
+    - Return 201 with created entry including relations
+
+app/api/time-entries/active/route.ts:
+  GET → findActive() → 200 (null if none)
+
+app/api/time-entries/[id]/route.ts:
+  GET → findById → 404/200
+  PUT → validate UpdateEntrySchema → update
+       if durationMinutes provided: stoppedAt = startedAt + durationMinutes*60s
+       → 200
+  DELETE → check not active → delete → 204
+
+app/api/time-entries/[id]/stop/route.ts:
+  POST → stopActive(id, now()) → compute durationSeconds → 200
+
+app/api/time-entries/[id]/continue/route.ts:
+  POST → find entry → stop current active if exists → create new entry copying
+         description, projectId, tagIds, billable → 201
+
+app/api/time-entries/route.ts GET — add query params: ?tagId= and ?q= to findMany filters
+
+app/api/reports/route.ts:
+  GET ?from &to (required) → fetch entries → use reportService.buildReport() +
+  reportService.buildTagReport() → merge into single response with byProject[] AND byTag[]
+  Include earnings per project (billableSeconds/3600 * hourlyRate) and totalEarnings
+  Projects include isArchived flag
+
+app/api/reports/export/route.ts:
+  GET ?from &to → fetch all entries for period (no 200 limit) →
+  reportService.entriesToCsv() → Response with Content-Type: text/csv +
+  Content-Disposition: attachment; filename=time-report-{from}_{to}.csv
+
+app/api/dashboard/route.ts:
+  GET ?from &to → build byDay, topProjects aggregation + totalEarnings
+  topProjects must include earnings per project (null if no hourlyRate)
+
+Follow #file:.github/instructions/api-routes.instructions.md
+```

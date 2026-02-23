@@ -79,7 +79,7 @@
 
 ## Services
 
-- [ ] Создать lib/services/report-service.ts
+- [x] Создать lib/services/report-service.ts
       • buildReport() — byProject[] с earnings + totalEarnings
       • buildTagReport() — byTag[]
       • calcEarnings(billableSeconds, hourlyRate | null)
@@ -101,18 +101,18 @@
 
 ## API — Time Entries
 
-- [ ] GET/POST /api/time-entries (с userId; POST: авто-стоп предыдущего таймера user'a)
-- [ ] GET /api/time-entries/active (с userId)
-- [ ] GET/PUT/DELETE /api/time-entries/[id] (с userId)
-- [ ] POST /api/time-entries/[id]/stop (с userId)
-- [ ] POST /api/time-entries/[id]/continue (с userId)
+- [x] GET/POST /api/time-entries (с userId; POST: авто-стоп предыдущего таймера user'a)
+- [x] GET /api/time-entries/active (с userId)
+- [x] GET/PUT/DELETE /api/time-entries/[id] (с userId)
+- [x] POST /api/time-entries/[id]/stop (с userId)
+- [x] POST /api/time-entries/[id]/continue (с userId)
 - [x] GET /api/task-names?q= (с userId)
 
 ## API — Reports & Dashboard
 
-- [ ] GET /api/reports?from=&to= (отвечает byProject[] + byTag[] + totalEarnings)
-- [ ] GET /api/reports/export?from=&to= (CSV)
-- [ ] GET /api/dashboard?from=&to= (отвечает totalEarnings + earnings в topProjects)
+- [x] GET /api/reports?from=&to= (отвечает byProject[] + byTag[] + totalEarnings)
+- [x] GET /api/reports/export?from=&to= (CSV)
+- [x] GET /api/dashboard?from=&to= (отвечает totalEarnings + earnings в topProjects)
 
 ## UI — Timer (FEATURE_timer.md)
 
