@@ -53,7 +53,9 @@ export const useEntriesStore = create<EntriesState>((set, get) => ({
     const { entries } = get();
     const prevEntries = entries;
 
-    // Оптимистичное обновление — частичный merge полей
+    // Оптимистичное обновление — частичный merge скалярных полей.
+    // timeEntryTags не обновляем оптимистично — нет полных объектов тегов,
+    // только IDs; сервер вернёт полные данные и они будут применены ниже.
     set({
       entries: entries.map((e) =>
         e.id === id
@@ -61,6 +63,13 @@ export const useEntriesStore = create<EntriesState>((set, get) => ({
               ...e,
               description: data.description !== undefined ? data.description : e.description,
               billable: data.billable !== undefined ? data.billable : e.billable,
+              projectId: data.projectId !== undefined ? data.projectId : e.projectId,
+              project:
+                data.projectId !== undefined
+                  ? data.projectId === null
+                    ? null
+                    : e.project // project-объект пока оставляем старый; сервер обновит
+                  : e.project,
             }
           : e
       ),

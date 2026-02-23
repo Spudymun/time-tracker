@@ -16,6 +16,9 @@ interface EntryDurationInputProps {
   onConfirm: (durationSeconds: number) => void;
   onCancel?: () => void;
   disabled?: boolean;
+  /** Фокусировать инпут при монтировании. По умолчанию false — чтобы не перехватывать
+   * фокус у других полей формы (например, поля описания в EntryItem). */
+  autoFocus?: boolean;
 }
 
 /**
@@ -34,6 +37,7 @@ export function EntryDurationInput({
   onConfirm,
   onCancel,
   disabled = false,
+  autoFocus = false,
 }: EntryDurationInputProps) {
   const [value, setValue] = useState(() => formatForInput(durationSeconds));
   const [error, setError] = useState<string | null>(null);
@@ -44,11 +48,13 @@ export function EntryDurationInput({
     setValue(formatForInput(durationSeconds));
   }, [durationSeconds]);
 
-  // Фокус при монтировании
+  // Фокусируем только если явно запрошено — не перехватываем фокус у других полей формы
   useEffect(() => {
-    inputRef.current?.focus();
-    inputRef.current?.select();
-  }, []);
+    if (autoFocus) {
+      inputRef.current?.focus();
+      inputRef.current?.select();
+    }
+  }, [autoFocus]);
 
   function tryConfirm() {
     if (value === formatForInput(durationSeconds)) {

@@ -184,14 +184,12 @@ export function EntryItem({ entry, projects, tags }: EntryItemProps) {
           {/* BillableToggle */}
           <BillableToggle checked={editBillable} onChange={setEditBillable} />
 
-          {/* Duration input */}
-          {editDurationSeconds > 0 && (
-            <EntryDurationInput
-              durationSeconds={editDurationSeconds}
-              onConfirm={(s) => setEditDurationSeconds(s)}
-              onCancel={() => {}}
-            />
-          )}
+          {/* Duration input — показываем всегда для завершённых записей */}
+          <EntryDurationInput
+            durationSeconds={editDurationSeconds}
+            onConfirm={(s) => setEditDurationSeconds(s)}
+            autoFocus={false}
+          />
 
           {/* Save / Cancel */}
           <div className="flex items-center gap-2">

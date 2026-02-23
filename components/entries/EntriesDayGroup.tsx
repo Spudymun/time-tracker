@@ -77,7 +77,9 @@ export function EntriesDayGroup({
       </div>
 
       {/* Группы проектов */}
-      <div className="overflow-hidden rounded-xl border border-border">
+      {/* overflow-visible (default) позволяет абсолютным dropdown (ProjectSelect/TagSelect) */}
+      {/* в режиме редактирования выходить за пределы карточки и не обрезаться */}
+      <div className="rounded-xl border border-border">
         {projectGroups.map((group, idx) => (
           <div
             key={group.projectId ?? "__no_project__"}
