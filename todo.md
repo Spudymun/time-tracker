@@ -195,10 +195,10 @@
 
 ## Тесты
 
-- [ ] Тесты валидационных схем
-- [ ] Тесты report-service (buildReport, entriesToCsv)
+- [x] Тесты валидационных схем (project-schema: 20, tag-schema: 16, time-entry-schema: 23)
+- [x] Тесты report-service (buildReport, entriesToCsv, buildTagReport, buildDashboard, calcEarnings)
 - [ ] Тесты time-format-service (formatDuration, parseDurationInput)
-- [ ] `npx vitest run` — все тесты зелёные
+- [x] `npx vitest run` — все тесты зелёные (103/103 passed)
 
 ## Системные страницы + Обработка ошибок (Промпт 16а)
 
@@ -209,14 +209,31 @@
 - [x] Создать app/(main)/loading.tsx (skeleton: Dashboard placeholder + 3 строки entries)
 - [x] Создать app/projects/loading.tsx (skeleton: 4-5 строк проектов)
 - [x] Создать app/reports/loading.tsx (skeleton: selector + 5 строк таблицы)
+- [x] Создать app/tags/loading.tsx (skeleton: 5 строк тегов)
 - [x] Создать app/(auth)/login/loading.tsx и register/loading.tsx (<Spinner size="md" />)
+
+## Финальная проверка (Промпт 16)
+
+- [x] Проверка BUSINESS_RULES: один активный таймер per user, earnings округление, архивация
+- [x] Проверка DESIGN_SYSTEM: нет голых `<button>`/`<input>` вне ui/, нет slate-*/gray-* классов
+- [x] Проверка UI_STATES: все empty/error/loading states на месте
+- [x] Проверка auth: каждый API route начинается с `auth()` + 401, middleware защищает маршруты
+- [x] TagSelect блокирует добавление 11-го тега (MAX_TAGS = 10)
+- [x] WeeklyTargetBar читает localStorage в useEffect (hydration safe)
+- [x] CSV export: `from > to` → 400; 0 записей → только заголовки
+- [x] Только одна активная запись per user (фильтрация через userId)
+- [x] `npm run type-check` — без ошибок ✓
+- [x] `npm run lint` — 0 errors ✓ (только warnings из тестовых файлов)
+- [x] `npx vitest run` — 103/103 passed ✓
 
 ## Готовность к MVP
 
 - [ ] Все требования из тестового задания реализованы
 - [ ] `npm run build` — успешный build
-- [ ] `npm run type-check` — без ошибок
-- [ ] `npm run lint` — без ошибок
+- [x] `npm run type-check` — без ошибок
+- [x] `npm run lint` — без ошибок
+- [ ] Скопировать .env.example → .env.local и заполнить DATABASE_URL + AUTH_SECRET + OAuth
+- [ ] Запустить `npm run db:push`
 - [ ] Ручная проверка: start/stop таймера, редактирование записей, отчёт + CSV экспорт
 - [ ] Ручная проверка: app/not-found.tsx отображается на несуществующем URL
 - [ ] Ручная проверка: CSV с 0 записями содержит только заголовок
