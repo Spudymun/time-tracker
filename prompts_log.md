@@ -620,3 +620,16 @@ ReportsPage.tsx — client component
 
 Create app/reports/page.tsx
 ```
+
+---
+
+## Промпт 13: Navigation + Layout
+
+```
+Update app/layout.tsx:
+- Add TimerBar in header (sticky top-0)
+- Add navigation: Home (/) | Projects (/projects) | Tags (/tags) | Reports (/reports)
+- Use active link highlighting
+
+Ensure all pages have consistent layout padding below header
+```
