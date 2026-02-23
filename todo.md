@@ -86,7 +86,7 @@
       • buildDashboard() — topProjects с earnings + totalEarnings
       • entriesToCsv()
 - [ ] Создать lib/services/time-format-service.ts (formatDuration, parseDurationInput)
-- [ ] Тесты для report-service.test.ts
+- [x] Тесты для report-service.test.ts
       • empty entries, multiple projects, entry with multiple tags, calcEarnings edge cases
 
 ## API — Projects
