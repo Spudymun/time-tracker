@@ -661,3 +661,48 @@ All components: typed props, no `any`, forward refs where needed.
 
 Follow #file:spec/DESIGN_SYSTEM.md
 ```
+
+---
+
+## Промпт 15: UI — Auth Pages (Login + Register)
+
+```
+Read #file:spec/FEATURE_auth.md
+
+Create app/(auth)/layout.tsx:
+  - Centered layout (NO TimerBar, NO main navigation)
+  - Logo / app name centered at top
+  - Full-height centered card
+
+Create components/auth/:
+  OAuthButton.tsx — button with provider icon (GitHub/Google), loading state
+    Props: provider: 'github' | 'google', onClick: () => void, isLoading: boolean
+
+  LoginForm.tsx — "use client"
+    - Fields: email, password
+    - Submit: signIn('credentials', { email, password, callbackUrl: searchParams.get('callbackUrl') || '/' })
+    - On error: show toast with "Invalid credentials"
+    - GitHub OAuth button → signIn('github')
+    - Google OAuth button → signIn('google')
+    - Link to /register
+
+  RegisterForm.tsx — "use client"
+    - Fields: name, email, password, confirmPassword
+    - Submit: POST /api/auth/register → on success signIn('credentials', ...)
+    - Show 409 as toast: "Email already in use"
+    - Link to /login
+
+Create app/(auth)/login/page.tsx — renders LoginForm
+Create app/(auth)/register/page.tsx — renders RegisterForm
+
+Create components/ui/UserMenu.tsx — "use client"
+  - Shows: user avatar (image or initials), name
+  - Dropdown on click: user email (muted), divider, "Sign out" button
+  - Sign out: signOut({ callbackUrl: '/login' })
+
+Update app/layout.tsx:
+  - Import UserMenu, render in header (right side)
+  - Session provider NOT needed with Auth.js v5 (uses server-side auth())
+
+Follow #file:.github/instructions/components.instructions.md
+```

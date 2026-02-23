@@ -4,6 +4,8 @@ import "./globals.css";
 import { ToastProvider } from "@/components/ui/Toast";
 import { TimerBar } from "@/components/timer/TimerBar";
 import { NavLinks } from "@/components/ui/NavLinks";
+import { UserMenu } from "@/components/ui/UserMenu";
+import { SessionProvider } from "@/components/auth/SessionProvider";
 
 /**
  * Geist — шрифт Vercel (open-source, 2024).
@@ -35,18 +37,23 @@ export default function RootLayout({
   return (
     <html lang="ru" className={`${geistSans.variable} ${geistMono.variable}`}>
       <body className="bg-bg font-sans text-text-1 antialiased">
-        <ToastProvider>
-          <header className="sticky top-0 z-40 border-b border-border bg-surface shadow-sm">
-            {/* Строка навигации */}
-            <div className="flex h-11 items-center gap-4 border-b border-border-subtle px-4">
-              <span className="text-sm font-semibold text-text-1">⏱ Time Tracker</span>
-              <NavLinks />
-            </div>
-            {/* Строка таймера */}
-            <TimerBar />
-          </header>
-          <main className="min-h-screen">{children}</main>
-        </ToastProvider>
+        <SessionProvider>
+          <ToastProvider>
+            <header className="sticky top-0 z-40 border-b border-border bg-surface shadow-sm">
+              {/* Строка навигации */}
+              <div className="flex h-11 items-center gap-4 border-b border-border-subtle px-4">
+                <span className="text-sm font-semibold text-text-1">⏱ Time Tracker</span>
+                <NavLinks />
+                <div className="ml-auto">
+                  <UserMenu />
+                </div>
+              </div>
+              {/* Строка таймера */}
+              <TimerBar />
+            </header>
+            <main className="min-h-screen">{children}</main>
+          </ToastProvider>
+        </SessionProvider>
       </body>
     </html>
   );
