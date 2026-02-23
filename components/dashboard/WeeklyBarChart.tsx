@@ -120,6 +120,7 @@ export function WeeklyBarChart({ byDay }: WeeklyBarChartProps) {
             tickLine={false}
           />
           <YAxis
+            hide={!hasData}
             tick={{ fontSize: 10, fill: "var(--color-text-3)" }}
             axisLine={false}
             tickLine={false}
