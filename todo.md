@@ -160,10 +160,11 @@
 ## UI — Tags (FEATURE_tags.md)
 
 - [x] TagChip.tsx (цветной chip, переиспользуемый) — создан в Промпте 6а
-- [ ] TagForm.tsx
-- [ ] TagItem.tsx (display + edit)
-- [ ] TagsList.tsx
-- [ ] Создать страницу /tags
+- [x] TagForm.tsx
+- [x] TagItem.tsx (display + edit)
+- [x] TagsList.tsx
+- [x] Создать страницу /tags
+- [x] TagSelect.tsx: inline "Create new tag" option (POST /api/tags → select)
 
 ## UI — Reports (FEATURE_reports.md)
 

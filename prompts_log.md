@@ -562,3 +562,21 @@ ProjectsList.tsx — renders active projects by default
 
 Create app/projects/page.tsx — server component fetching projects
 ```
+
+---
+
+## Промпт 11: UI — Tags Page
+
+```
+Read #file:spec/FEATURE_tags.md
+
+Create components/tags/:
+- TagForm.tsx — name + ColorPicker compact form
+- TagItem.tsx (display + edit)
+- TagsList.tsx
+
+Create app/tags/page.tsx
+
+Update TagSelect.tsx if needed — allow "Create new tag" option inline in dropdown
+  POST /api/tags → add to list → select it
+```
