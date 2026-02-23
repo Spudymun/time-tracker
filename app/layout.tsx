@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ToastProvider } from "@/components/ui/Toast";
+import { TimerBar } from "@/components/timer/TimerBar";
 
 /**
  * Geist — шрифт Vercel (open-source, 2024).
@@ -33,7 +34,12 @@ export default function RootLayout({
   return (
     <html lang="ru" className={`${geistSans.variable} ${geistMono.variable}`}>
       <body className="bg-bg font-sans text-text-1 antialiased">
-        <ToastProvider>{children}</ToastProvider>
+        <ToastProvider>
+          <header className="sticky top-0 z-40 border-b border-border bg-surface shadow-sm">
+            <TimerBar />
+          </header>
+          <main className="min-h-screen">{children}</main>
+        </ToastProvider>
       </body>
     </html>
   );

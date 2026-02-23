@@ -117,14 +117,14 @@
 ## UI — Timer (FEATURE_timer.md)
 
 - [x] Создать lib/stores/timer-store.ts
-- [ ] TimerDisplay.tsx (тикающий счётчик hh:mm:ss)
-- [ ] TaskAutocomplete.tsx (поле с dropdown)
-- [ ] ProjectSelect.tsx (dropdown проектов)
-- [ ] TagSelect.tsx (мульти-выбор тегов)
-- [ ] BillableToggle.tsx (чекбокс)
-- [ ] TimerControls.tsx (кнопка Start/Stop)
-- [ ] TimerBar.tsx (хедер-контейнер)
-- [ ] Подключить TimerBar в app/layout.tsx
+- [x] TimerDisplay.tsx (тикающий счётчик hh:mm:ss)
+- [x] TaskAutocomplete.tsx (поле с dropdown)
+- [x] ProjectSelect.tsx (dropdown проектов)
+- [x] TagSelect.tsx (мульти-выбор тегов)
+- [x] BillableToggle.tsx (чекбокс)
+- [x] TimerControls.tsx (кнопка Start/Stop)
+- [x] TimerBar.tsx (хедер-контейнер)
+- [x] Подключить TimerBar в app/layout.tsx
 
 ## UI — Entries List (FEATURE_entries.md)
 

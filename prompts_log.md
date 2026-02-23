@@ -400,3 +400,45 @@ Rules (from spec/DESIGN_SYSTEM.md):
 
 Follow #file:spec/DESIGN_SYSTEM.md
 ```
+
+---
+
+## Промпт 7: UI — TimerBar (хедер таймера)
+
+```
+Read #file:spec/FEATURE_timer.md (components section)
+
+Create components/timer/:
+
+BillableToggle.tsx — simple checkbox/"$" icon toggle, props: checked, onChange
+TagSelect.tsx — multi-select dropdown with search. Props: value: string[], onChange, tags: Tag[]
+  - Shows selected tags as TagChip components
+  - Dropdown with search input, checkboxes
+  - "No tags" empty state
+
+ProjectSelect.tsx — dropdown select for project. Props: value: string|null, onChange, projects: Project[]
+  - Shows project color dot + name
+  - "No project" option at top
+
+TaskAutocomplete.tsx — input field with dropdown suggestions
+  - Fetches /api/task-names?q= on input change (debounce 300ms)
+  - Keyboard navigation (arrows + Enter)
+  - Clears on timer stop
+
+TimerDisplay.tsx — "use client", shows hh:mm:ss
+  - useEffect + setInterval(1000)
+  - Reads elapsedSeconds from timer-store
+
+TimerControls.tsx — Start/Stop button
+  - "Start" (green) when idle, "Stop" (red) when running
+  - Shows loading spinner during API call
+
+TimerBar.tsx — horizontal bar, always in layout header
+  - Fetches projects and tags on mount for selects
+  - Uses timer-store
+  - Layout: [TaskAutocomplete] [ProjectSelect] [TagSelect] [BillableToggle] [TimerDisplay] [TimerControls]
+
+Integrate TimerBar into app/layout.tsx
+
+Follow #file:.github/instructions/components.instructions.md
+```
