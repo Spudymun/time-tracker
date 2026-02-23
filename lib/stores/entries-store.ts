@@ -9,6 +9,9 @@ import { apiFetch } from "@/lib/utils/api-client";
 interface EntriesState {
   entries: TimeEntryWithRelations[];
   isLoading: boolean;
+  /** Инкрементируется при каждой успешной мутации (add/update/delete).
+   * Используется DashboardWidget для автообновления после изменений. */
+  mutationVersion: number;
 
   // Actions
   fetchEntries: (from: Date, to: Date) => Promise<void>;
@@ -24,6 +27,7 @@ interface EntriesState {
 const initialState = {
   entries: [] as TimeEntryWithRelations[],
   isLoading: false,
+  mutationVersion: 0,
 };
 
 export const useEntriesStore = create<EntriesState>((set, get) => ({
@@ -87,7 +91,10 @@ export const useEntriesStore = create<EntriesState>((set, get) => ({
       }
       const updated: TimeEntryWithRelations = await res.json();
       // Заменяем на полный объект с отношениями от сервера
-      set({ entries: get().entries.map((e) => (e.id === id ? updated : e)) });
+      set((state) => ({
+        entries: state.entries.map((e) => (e.id === id ? updated : e)),
+        mutationVersion: state.mutationVersion + 1,
+      }));
     } catch (err) {
       // Откат при ошибке
       set({ entries: prevEntries });
@@ -110,6 +117,7 @@ export const useEntriesStore = create<EntriesState>((set, get) => ({
         const err = await res.json().catch(() => ({}));
         throw new Error((err as { error?: string }).error ?? "Failed to delete entry");
       }
+      set((state) => ({ mutationVersion: state.mutationVersion + 1 }));
     } catch (err) {
       // Откат при ошибке
       set({ entries: prevEntries });
@@ -141,7 +149,10 @@ export const useEntriesStore = create<EntriesState>((set, get) => ({
   // Добавляет запись в начало списка.
   // Вызывается из timer-store после успешной остановки таймера.
   addEntry: (entry: TimeEntryWithRelations) => {
-    set((state) => ({ entries: [entry, ...state.entries] }));
+    set((state) => ({
+      entries: [entry, ...state.entries],
+      mutationVersion: state.mutationVersion + 1,
+    }));
   },
 
   // Заменяет активную запись (stoppedAt=null) в списке или удаляет её.
@@ -167,6 +178,8 @@ export const useEntries = () => useEntriesStore((s) => s.entries);
 export const useEntriesIsLoading = () => useEntriesStore((s) => s.isLoading);
 
 // Возвращает только actions — они не меняются, не вызывают ре-рендер
+export const useEntriesMutationVersion = () => useEntriesStore((s) => s.mutationVersion);
+
 export const useEntriesActions = () =>
   useEntriesStore(
     useShallow((s) => ({

@@ -23,6 +23,7 @@ import { Spinner } from "@/components/ui/Spinner";
 import { startOfWeek, formatDate } from "@/lib/utils/date-utils";
 import type { DashboardData } from "@/lib/services/report-service";
 import { apiFetch } from "@/lib/utils/api-client";
+import { useEntriesMutationVersion } from "@/lib/stores/entries-store";
 
 // ─── Helpers ───────────────────────────────────────────────────────────────
 
@@ -58,6 +59,7 @@ export function DashboardWidget() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const widgetRef = useRef<HTMLElement | null>(null);
+  const mutationVersion = useEntriesMutationVersion();
 
   const { fromStr, toStr, from: weekFrom, to: weekTo } = getWeekRange(weekOffset);
 
@@ -80,7 +82,7 @@ export function DashboardWidget() {
 
   useEffect(() => {
     void fetchData();
-  }, [fetchData]);
+  }, [fetchData, mutationVersion]);
 
   const weekLabel = buildWeekLabel(weekFrom, weekTo);
   const isCurrentWeek = weekOffset === 0;
