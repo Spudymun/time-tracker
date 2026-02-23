@@ -179,7 +179,9 @@
 
 ## UI — Navigation
 
-- [ ] Навигация в layout: главная / projects / tags / reports
+- [x] Навигация в layout: главная / projects / tags / reports
+      • Создан components/ui/NavLinks.tsx (usePathname, active highlighting bg-surface-3)
+      • Header: строка nav (лого + NavLinks) + строка TimerBar
 - [ ] UserMenu.tsx — аватар/инициалы + имя + dropdown (имя, email, Sign out)
 
 ## UI — Auth Pages (Prompt 15)
